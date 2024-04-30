@@ -2,32 +2,39 @@ import { DeleteResult, FindManyOptions, InsertResult, Repository, UpdateResult }
 import { ModelInterface } from "../models/model.interface";
 import { RepositoryInterface } from "./repository.interface";
 import { InjectRepository } from "@nestjs/typeorm";
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 
-export abstract class RepositoryAbstract implements RepositoryInterface {
+interface HasId {
+    id: number
+}
+export abstract class RepositoryAbstract<T extends HasId> implements RepositoryInterface<T> {
+    private repository: Repository<T>
+
     constructor(
-        @InjectRepository(ModelInterface)
-        private readonly repository: Repository<ModelInterface>
-    ){}
+        repository: Repository<T>
+    ){
+        this.repository = repository
+    }
 
-    async findAll(options?: FindManyOptions<ModelInterface>): Promise<ModelInterface[]> {
+    async findAll(options?: FindManyOptions<T>): Promise<T[]> {
         return await this.repository.find(options )
     }
 
-    async findById(id: number): Promise<ModelInterface> {
+    async findById(id: any): Promise<T> {
         return await this.repository.findOneBy({ id: id }) 
     }
 
-    async create(data: ModelInterface): Promise<InsertResult> {
+    async create(data: QueryDeepPartialEntity<T>): Promise<InsertResult> {
         return await this.repository.insert(data)
     }
 
-    async update(data: ModelInterface, id: number): Promise<UpdateResult> {
+    async update(data: QueryDeepPartialEntity<T>, id: any): Promise<UpdateResult> {
         return await this.repository.update({
             id: id
         }, data)
     }
 
-    async delete(id: number): Promise<DeleteResult> {
+    async delete(id: any): Promise<DeleteResult> {
         return await this.repository.delete({ id: id })
     }
 }

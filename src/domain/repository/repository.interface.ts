@@ -1,14 +1,14 @@
 import { DeleteResult, FindManyOptions, InsertResult, UpdateResult } from "typeorm"
-import { ModelInterface } from "../models/model.interface"
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity"
 
-export interface RepositoryInterface {
-    findAll(options?: FindManyOptions<ModelInterface>): Promise<ModelInterface[]>
+export interface RepositoryInterface<T> {
+    findAll(options?: FindManyOptions<T>): Promise<T[]>
 
-    findById(id: number): Promise<ModelInterface>
+    findById(id: any): Promise<T>
 
-    create(data: ModelInterface): Promise<InsertResult>
+    create(data: QueryDeepPartialEntity<T>): Promise<InsertResult>
 
-    update(data: ModelInterface, id: number): Promise<UpdateResult>
+    update(data: QueryDeepPartialEntity<T>, id: any): Promise<UpdateResult>
 
-    delete(id: number): Promise<DeleteResult>
+    delete(id: any): Promise<DeleteResult>
 }

@@ -1,6 +1,6 @@
-import { ModelInterface } from "../models/model.interface";
+import { User } from "../models";
 import { RepositoryInterface } from "./repository.interface";
 
-export interface UserRepositoryInterface extends RepositoryInterface {
-    findByEmail(email: string): Promise<ModelInterface>
+export interface UserRepositoryInterface extends RepositoryInterface<User> {
+    findByEmail(email: string): Promise<User>
 }
