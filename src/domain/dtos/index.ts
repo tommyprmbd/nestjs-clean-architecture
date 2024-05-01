@@ -1,0 +1,1 @@
+export * from './response/meta-pagination-response-dto.interface'

@@ -2,7 +2,6 @@ import { ModelAbstract } from "./model.abstract"
 
 export class User extends ModelAbstract {
     static MIN_FULL_NAME_LENGTH: number = 6
-
     static MAX_FULL_NAME_LENGTH: number = 100
 
     protected fullName: string
