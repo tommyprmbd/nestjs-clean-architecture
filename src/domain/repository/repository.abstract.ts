@@ -21,6 +21,7 @@ export abstract class RepositoryAbstract<T extends HasId> implements RepositoryI
     }
 
     async findById(id: any): Promise<T> {
+        console.log(id)
         return await this.repository.findOneBy({ id: id }) 
     }
 
