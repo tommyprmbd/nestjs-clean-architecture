@@ -1,6 +1,7 @@
 import { ModelAbstract } from "./model.abstract"
 
 export class User extends ModelAbstract {
+    static DEF_ACTIVE_STATUS_AFTR_REG: boolean = false
     static MIN_FULL_NAME_LENGTH: number = 6
     static MAX_FULL_NAME_LENGTH: number = 100
 

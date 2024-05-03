@@ -1,7 +1,7 @@
 import { TypeOrmModuleOptions } from "@nestjs/typeorm";
-import { DbConfig } from "src/domain/config";
+import { DbConfigInterface } from "src/domain/config";
 
-export const TypeOrmOptions = (dbConfig: DbConfig): TypeOrmModuleOptions => ({
+export const TypeOrmOptions = (dbConfig: DbConfigInterface): TypeOrmModuleOptions => ({
     type: dbConfig.getType(),
     host: dbConfig.getHost(),
     port: dbConfig.getPort(),

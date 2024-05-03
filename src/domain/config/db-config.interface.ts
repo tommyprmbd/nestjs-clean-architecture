@@ -1,4 +1,4 @@
-export interface DbConfig {
+export interface DbConfigInterface {
     getType(): string;
   
     getHost(): string;

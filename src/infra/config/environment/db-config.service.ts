@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { DbConfig } from 'src/domain/config';
+import { DbConfigInterface } from 'src/domain/config';
 import { DbConfigEnum } from 'src/infra/common';
 
 @Injectable()
-export class EnvironmentService implements DbConfig {
+export class DbConfigService implements DbConfigInterface {
     constructor(private readonly configService: ConfigService){}
     
     getType(): string {

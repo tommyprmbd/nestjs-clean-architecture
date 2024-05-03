@@ -1,14 +1,16 @@
 import { UsecaseProxyProviderType } from "src/domain/common";
 import { UseCaseProxyRegisterInterface } from "src/domain/usecase";
 import { UserRepository } from "src/infra/repositories/user.repository";
-import { UserFindAllUseCase, UserFindByIdUseCase } from "src/usecase/users";
+import { UserCreateUseCase, UserFindAllUseCase, UserFindByIdUseCase } from "src/usecase/users";
 import { UseCasesProxy } from "../use-cases.proxy";
+import { EncryptService } from "src/infra/encrypt";
 
 export class UserProxyRegister implements UseCaseProxyRegisterInterface {
     registerExports(): Array<string> {
         return [
             UserFindAllUseCase.name,
             UserFindByIdUseCase.name,
+            UserCreateUseCase.name,
         ]
     }
 
@@ -23,7 +25,15 @@ export class UserProxyRegister implements UseCaseProxyRegisterInterface {
                 inject: [UserRepository],
                 provide: UserFindByIdUseCase.name,
                 useFactory: (repository: UserRepository) => new UseCasesProxy(new UserFindByIdUseCase(repository)) 
-            }
+            },
+            {
+                inject: [
+                    UserRepository,
+                    EncryptService,
+                ],
+                provide: UserCreateUseCase.name,
+                useFactory: (repository: UserRepository, encrypt: EncryptService) => new UseCasesProxy(new UserCreateUseCase(repository, encrypt)) 
+            },
         ]
     }
 }

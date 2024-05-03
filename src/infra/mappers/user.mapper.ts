@@ -7,6 +7,8 @@ export class UserMapper implements UserMapperInterface {
     }
 
     public asSingle(object: User): User {
+        if (!object) return null
+
         const user = new User()
         user.setId(object.gettId())
         user.setFullName(object.getFullName())
@@ -19,6 +21,8 @@ export class UserMapper implements UserMapperInterface {
     }
 
     public asSingleWithPassword(object: User): User {
+        if (!object) return null
+        
         const user = new User()
         user.setId(object.gettId())
         user.setFullName(object.getFullName())

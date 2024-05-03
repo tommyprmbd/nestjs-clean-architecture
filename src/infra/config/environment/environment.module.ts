@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
-import { EnvironmentService } from './environment.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { DbConfigService } from './db-config.service';
+import { EncryptConfigService } from './encrypt-config.service';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       isGlobal: true
     }),
   ],
-  providers: [EnvironmentService, ConfigService],
-  exports: [EnvironmentService, ConfigService],
+  providers: [DbConfigService, EncryptConfigService],
+  exports: [DbConfigService, EncryptConfigService],
 })
 export class EnvironmentModule {}

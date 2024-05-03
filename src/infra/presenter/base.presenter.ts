@@ -2,7 +2,7 @@ import { PresenterInterface } from "src/domain/presenter";
 import { MetaResponseDto, StatusResponseDto } from "../dtos";
 import { ModelInterface } from "src/domain/models/model.interface";
 import { ApiProperty } from "@nestjs/swagger";
-import { NotFoundException } from "@nestjs/common";
+import { HttpStatus, NotFoundException } from "@nestjs/common";
 import { DeleteResult, InsertResult, UpdateResult } from "typeorm";
 
 export class BasePresenter implements PresenterInterface {
@@ -34,6 +34,7 @@ export class BasePresenter implements PresenterInterface {
         if (data instanceof InsertResult) {
             const dataLength = data.identifiers.length
             this.status.message = dataLength > 0 ? 'Created.' : 'Failed to create.'
+            this.status.code = dataLength > 0 ? HttpStatus.CREATED : 0
             data = dataLength > 0 ? data.identifiers.at(0) : null
         }
 
