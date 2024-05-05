@@ -1,5 +1,5 @@
 import { User } from "src/domain/models";
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity } from "typeorm";
 
 @Entity({ name: 'users' })
 export class UserEntity extends User {

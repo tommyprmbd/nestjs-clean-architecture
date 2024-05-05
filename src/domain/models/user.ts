@@ -5,11 +5,11 @@ export class User extends ModelAbstract {
     static MIN_FULL_NAME_LENGTH: number = 6
     static MAX_FULL_NAME_LENGTH: number = 100
 
-    protected fullName: string
-    protected email: string
-    protected password: string
-    protected phone: string
-    protected isActive: boolean
+    fullName: string
+    email: string
+    password: string
+    phone: string
+    isActive: boolean
 
     public getFullName(): string {
         return this.fullName;
