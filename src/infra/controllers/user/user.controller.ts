@@ -1,9 +1,9 @@
-import { Body, Controller, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
 import { UpdateUserDto } from 'src/infra/dtos';
 import { CreateUserDto } from 'src/infra/dtos/user/create-user.dto';
 import { BasePresenter } from 'src/infra/presenter/base.presenter';
 import { UseCasesProxy } from 'src/infra/use-cases-proxy/use-cases.proxy';
-import { UserCreateUseCase, UserFindAllUseCase } from 'src/usecase/users';
+import { UserCreateUseCase, UserDeleteUseCase, UserFindAllUseCase } from 'src/usecase/users';
 import { UserFindByIdUseCase } from 'src/usecase/users/find-by-id.usecase';
 import { UserUpdateUseCase } from 'src/usecase/users/update.usecase';
 import { FindManyOptions } from 'typeorm';
@@ -22,6 +22,9 @@ export class UserController {
 
         @Inject(UserUpdateUseCase.name)
         private readonly updateUseCase: UseCasesProxy<UserUpdateUseCase>,
+
+        @Inject(UserDeleteUseCase.name)
+        private readonly deleteUseCase: UseCasesProxy<UserDeleteUseCase>,
     ){}
 
     @Get()
@@ -42,5 +45,10 @@ export class UserController {
     @Put(':id')
     async update(@Param('id') id: number, @Body() body: UpdateUserDto) {
         return new BasePresenter(await this.updateUseCase.getInstance().execute(body, id))
+    }
+
+    @Delete(':id')
+    async delete(@Param('id') id: number) {
+        return new BasePresenter(await this.deleteUseCase.getInstance().execute(id))
     }
 }

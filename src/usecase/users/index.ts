@@ -1,3 +1,5 @@
 export * from './find-all.usecase'
 export * from './find-by-id.usecase'
 export * from './create.usecase'
+export * from './update.usecase'
+export * from './delete.usecase'
