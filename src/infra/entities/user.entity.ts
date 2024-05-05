@@ -13,7 +13,7 @@ export class UserEntity extends User {
     @Column('varchar', { length: 160 })
     password: string
 
-    @Column('varchar', { length: 20 })
+    @Column('varchar', { length: 20, unique: true })
     phone: string
 
     @Column()
