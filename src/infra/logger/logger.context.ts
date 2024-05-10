@@ -4,4 +4,6 @@ export class LoggerContext {
     static ERROR_EXCEPTION_FILTER = 'ErrorExceptionFilter'
 
     static REQUEST_INTERCEPTOR = 'RequestInterceptor'
+
+    static SWAGGER = 'Swagger'
 }

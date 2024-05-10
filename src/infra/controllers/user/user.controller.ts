@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from 'src/infra/dtos';
 import { CreateUserDto } from 'src/infra/dtos/user/create-user.dto';
 import { BasePresenter } from 'src/infra/presenter/base.presenter';
@@ -8,6 +9,7 @@ import { UserFindByIdUseCase } from 'src/usecase/users/find-by-id.usecase';
 import { UserUpdateUseCase } from 'src/usecase/users/update.usecase';
 import { FindManyOptions } from 'typeorm';
 
+@ApiTags('User')
 @Controller('users')
 export class UserController {
     constructor(
