@@ -1,13 +1,13 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UpdateUserDto } from 'src/infra/dtos';
+import { PageOptionsDto } from 'src/infra/dtos/request/page-options.dto';
 import { CreateUserDto } from 'src/infra/dtos/user/create-user.dto';
 import { BasePresenter } from 'src/infra/presenter/base.presenter';
 import { UseCasesProxy } from 'src/infra/use-cases-proxy/use-cases.proxy';
 import { UserCreateUseCase, UserDeleteUseCase, UserFindAllUseCase } from 'src/usecase/users';
 import { UserFindByIdUseCase } from 'src/usecase/users/find-by-id.usecase';
 import { UserUpdateUseCase } from 'src/usecase/users/update.usecase';
-import { FindManyOptions } from 'typeorm';
 
 @ApiTags('User')
 @Controller('users')
@@ -30,7 +30,7 @@ export class UserController {
     ){}
 
     @Get()
-    async findAll(@Query() options: FindManyOptions) {
+    async findAll(@Query() options: PageOptionsDto) {
         return new BasePresenter(await this.findAllUseCase.getInstance().execute(options))
     }
 

@@ -1,24 +1,35 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { MetaPaginationResponseDtoInterface } from "src/domain/dtos";
+import { MetaPaginationParameterDtoInterface } from "./meta-pagination-parameter-response.dto.interface";
 
 export class MetaPaginationResponseDto implements MetaPaginationResponseDtoInterface {
     @ApiProperty()
-    page: number
+    readonly page: number
 
     @ApiProperty()
-    itemCount: number
+    readonly take: number
 
     @ApiProperty()
-    pageCount: number
+    readonly itemCount: number
 
     @ApiProperty()
-    hasPreviousPage: boolean
+    readonly pageCount: number
 
     @ApiProperty()
-    hasNextPage: boolean
+    readonly hasPreviousPage: boolean
 
-    constructor(){
+    @ApiProperty()
+    readonly hasNextPage: boolean
 
+    constructor(
+        {itemCount, pageOptionsDto}: MetaPaginationParameterDtoInterface
+    ){
+        this.page = pageOptionsDto.page
+        this.take = pageOptionsDto.take
+        this.itemCount = itemCount
+        this.pageCount = Math.ceil(itemCount / this.take)
+        this.hasPreviousPage = this.page > 1
+        this.hasNextPage = this.page < this.pageCount
     }
 
     getPage(): number {
