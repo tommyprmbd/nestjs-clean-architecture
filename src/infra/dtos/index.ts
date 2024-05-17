@@ -4,3 +4,5 @@ export * from './response/meta-pagination-response.dto'
 
 export * from './user/create-user.dto'
 export * from './user/update-user.dto'
+
+export * from './auth/auth-login.dto'

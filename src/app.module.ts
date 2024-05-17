@@ -6,6 +6,7 @@ import { RepositoriesModule } from './infra/repositories/repositories.module';
 import { UseCasesProxyModule } from './infra/use-cases-proxy/use-cases-proxy.module';
 import { ControllersModule } from './infra/controllers/controllers.module';
 import { LoggerModule } from './infra/logger/logger.module';
+import { AuthModule } from './infra/auth/auth.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { LoggerModule } from './infra/logger/logger.module';
     TypeOrmModule,
     ControllersModule,
     LoggerModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

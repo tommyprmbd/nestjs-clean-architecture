@@ -4,17 +4,21 @@ import { UseCaseProxyRegisterInterface } from 'src/domain/usecase';
 import { RepositoriesModule } from '../repositories/repositories.module';
 import { EncryptModule } from '../encrypt/encrypt.module';
 import { EnvironmentModule } from '../config/environment/environment.module';
+import { AuthProxyRegister } from './registers/auth.proxy-register';
+import { AuthModule } from '../auth';
 
 @Module({
     imports: [
         RepositoriesModule,
         EncryptModule,
         EnvironmentModule,
+        AuthModule,
     ]
 })
 export class UseCasesProxyModule {
     private static useCaseRegisterList = [
         new UserProxyRegister(),
+        new AuthProxyRegister(),
     ]
 
     private static providersList = []
