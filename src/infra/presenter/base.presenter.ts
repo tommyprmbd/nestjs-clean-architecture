@@ -4,6 +4,7 @@ import { ModelInterface } from "src/domain/models/model.interface";
 import { ApiProperty } from "@nestjs/swagger";
 import { HttpStatus, NotFoundException } from "@nestjs/common";
 import { DeleteResult, InsertResult, UpdateResult } from "typeorm";
+import { PaginateResultDto } from "../dtos/result/paginate-result.dto";
 
 export class BasePresenter implements PresenterInterface {
     @ApiProperty()
@@ -21,9 +22,14 @@ export class BasePresenter implements PresenterInterface {
         meta: MetaResponseDto = new MetaResponseDto()
     ){
         this.status = status
-        this.meta = meta
-
-        this.data = this.transform(data)
+        if (data instanceof PaginateResultDto) {
+            const setupMeta: MetaResponseDto = new MetaResponseDto(data.pagination)
+            this.meta = setupMeta
+            this.data = this.transform(data.data)
+        } else {
+            this.meta = meta
+            this.data = this.transform(data)
+        }
     }
 
     transform(data: any) {

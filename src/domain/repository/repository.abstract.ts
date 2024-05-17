@@ -41,7 +41,7 @@ export abstract class RepositoryAbstract<T extends HasId> implements RepositoryI
         return await this.repository.delete({ id: id })
     }
     
-    async paginate(pageOptionsDto: PageOptionsDtoInterface): Promise<any> {
+    async paginate(pageOptionsDto: PageOptionsDtoInterface): Promise<PaginateResultDto<T>> {
         const queryBuilder = this.repository.createQueryBuilder('t')
 
         queryBuilder
