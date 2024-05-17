@@ -42,6 +42,10 @@ async function bootstrap() {
     SwaggerModule.setup(appSwaggerService.getPath(), app, document)
   }
 
-  await app.listen(3000);
+  const port = appConfigServer.getPort()
+  const logger = new ConsoleLogger()
+  await app.listen(port, () => {
+    logger.log(`Application running on port ${port}`)
+  });
 }
 bootstrap();
