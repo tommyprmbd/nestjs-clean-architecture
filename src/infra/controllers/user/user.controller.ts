@@ -1,8 +1,7 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { UpdateUserDto } from 'src/infra/dtos';
-import { PageOptionsDto } from 'src/infra/dtos/request/page-options.dto';
-import { CreateUserDto } from 'src/infra/dtos/user/create-user.dto';
+import { JwtAuthGuard } from 'src/infra/auth';
+import { CreateUserDto, PageOptionsDto, UpdateUserDto } from 'src/infra/dtos';
 import { BasePresenter } from 'src/infra/presenter/base.presenter';
 import { UseCasesProxy } from 'src/infra/use-cases-proxy/use-cases.proxy';
 import { UserCreateUseCase, UserDeleteUseCase, UserFindAllUseCase } from 'src/usecase/users';
@@ -11,6 +10,7 @@ import { UserUpdateUseCase } from 'src/usecase/users/update.usecase';
 
 @ApiTags('User')
 @Controller('users')
+@UseGuards(JwtAuthGuard)
 export class UserController {
     constructor(
         @Inject(UserFindAllUseCase.name)

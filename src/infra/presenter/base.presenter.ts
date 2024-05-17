@@ -24,11 +24,11 @@ export class BasePresenter implements PresenterInterface {
         this.status = status
         if (data instanceof PaginateResultDto) {
             const setupMeta: MetaResponseDto = new MetaResponseDto(data.pagination)
-            this.meta = setupMeta
             this.data = this.transform(data.data)
+            this.meta = setupMeta
         } else {
-            this.meta = meta
             this.data = this.transform(data)
+            this.meta = meta
         }
     }
 
