@@ -1,5 +1,5 @@
 import { PageOptionsDtoInterface } from "src/domain/dtos";
-import { UserRepositoryInterface } from "src/domain/repository/user.repository.interface";
+import { UserRepositoryInterface } from "src/domain/repository/user-repository.interface";
 import { UseCaseInterface } from "src/domain/usecase";
 import { PaginateResultDto } from "src/infra/dtos/result/paginate-result.dto";
 import { UserMapper } from "src/infra/mappers/user.mapper";

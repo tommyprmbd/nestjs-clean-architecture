@@ -8,7 +8,8 @@ import { MetaPaginationResponseDto } from "src/infra/dtos";
 import { PaginateResultDto } from "src/infra/dtos/result/paginate-result.dto";
 
 interface HasId {
-    id: number
+    id?: number
+    key?: string
 }
 export abstract class RepositoryAbstract<T extends HasId> implements RepositoryInterface<T> {
     private repository: Repository<T>

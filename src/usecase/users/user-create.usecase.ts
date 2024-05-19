@@ -1,7 +1,7 @@
 import { CreateUserDtoInterface } from "src/domain/dtos";
 import { EncryptInterface } from "src/domain/encrypt";
 import { User } from "src/domain/models";
-import { UserRepositoryInterface } from "src/domain/repository/user.repository.interface";
+import { UserRepositoryInterface } from "src/domain/repository/user-repository.interface";
 import { UseCaseInterface } from "src/domain/usecase";
 
 export class UserCreateUseCase implements UseCaseInterface {

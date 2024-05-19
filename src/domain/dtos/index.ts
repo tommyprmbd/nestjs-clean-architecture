@@ -5,3 +5,5 @@ export * from './user/create-user-dto.interface'
 export * from './user/update-user-dto.interface'
 export * from './result/paginate-result.dto.interface'
 export * from './auth/auth-login-dto.interface'
+
+export * from './post/create-post-dto.interface'

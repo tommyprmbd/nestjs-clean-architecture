@@ -1,11 +1,10 @@
 import { DynamicModule, Module } from '@nestjs/common';
-import { UserProxyRegister } from './registers/user.proxy-register';
 import { UseCaseProxyRegisterInterface } from 'src/domain/usecase';
 import { RepositoriesModule } from '../repositories/repositories.module';
 import { EncryptModule } from '../encrypt/encrypt.module';
 import { EnvironmentModule } from '../config/environment/environment.module';
-import { AuthProxyRegister } from './registers/auth.proxy-register';
 import { AuthModule } from '../auth';
+import { AuthProxyRegister, PostProxyRegister, UserProxyRegister } from './registers';
 
 @Module({
     imports: [
@@ -17,8 +16,9 @@ import { AuthModule } from '../auth';
 })
 export class UseCasesProxyModule {
     private static useCaseRegisterList = [
-        new UserProxyRegister(),
         new AuthProxyRegister(),
+        new PostProxyRegister(),
+        new UserProxyRegister(),
     ]
 
     private static providersList = []

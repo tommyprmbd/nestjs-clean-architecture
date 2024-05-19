@@ -1,4 +1,4 @@
-import { UserRepositoryInterface } from "src/domain/repository/user.repository.interface";
+import { UserRepositoryInterface } from "src/domain/repository/user-repository.interface";
 import { UseCaseInterface } from "src/domain/usecase";
 import { UserMapper } from "src/infra/mappers/user.mapper";
 

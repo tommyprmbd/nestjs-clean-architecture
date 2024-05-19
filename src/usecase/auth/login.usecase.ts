@@ -1,6 +1,6 @@
 import { AuthLoginResponseInterface } from "src/domain/dtos";
 import { EncryptInterface } from "src/domain/encrypt";
-import { UserRepositoryInterface } from "src/domain/repository/user.repository.interface";
+import { UserRepositoryInterface } from "src/domain/repository/user-repository.interface";
 import { UseCaseInterface } from "src/domain/usecase";
 import { AuthService } from "src/infra/auth";
 import { AuthLoginDto } from "src/infra/dtos";

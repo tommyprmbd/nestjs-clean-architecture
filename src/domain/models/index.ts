@@ -1,1 +1,5 @@
+export * from './permission'
+export * from './post'
+export * from './role'
+export * from './role-permission'
 export * from './user'

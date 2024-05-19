@@ -1,1 +1,6 @@
 export * from './repository.abstract'
+export * from './permission-repository.interface'
+export * from './post-repository.interface'
+export * from './role-repository.interface'
+export * from './role-permission-repository.interface'
+export * from './user-repository.interface'
