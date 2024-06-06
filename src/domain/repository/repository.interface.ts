@@ -1,6 +1,6 @@
 import { DeleteResult, FindManyOptions, InsertResult, UpdateResult } from "typeorm"
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity"
-import { PageOptionsDtoInterface } from "../dtos"
+import { CreateResultDtoInterface, DeleteResultDtoInterface, PageOptionsDtoInterface, UpdateResultDtoInterface } from "../dtos"
 import { PaginateResultDto } from "src/infra/dtos/result/paginate-result.dto"
 
 export interface RepositoryInterface<T> {
@@ -8,11 +8,11 @@ export interface RepositoryInterface<T> {
 
     findById(id: any): Promise<T>
 
-    create(data: QueryDeepPartialEntity<T>): Promise<InsertResult>
+    create(data: QueryDeepPartialEntity<T>): Promise<CreateResultDtoInterface>
 
-    update(data: QueryDeepPartialEntity<T>, id: any): Promise<UpdateResult>
+    update(data: QueryDeepPartialEntity<T>, id: any): Promise<UpdateResultDtoInterface>
 
-    delete(id: any): Promise<DeleteResult>
+    delete(id: any): Promise<DeleteResultDtoInterface>
 
     paginate(pageOptionsDto: PageOptionsDtoInterface): Promise<PaginateResultDto<T>>
 }

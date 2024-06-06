@@ -1,6 +1,8 @@
+import { AuthServicePayloadInterface } from "../auth"
 import { ModelAbstract } from "./model.abstract"
+import { UserInterface } from "./user.interface"
 
-export class User extends ModelAbstract {
+export class User extends ModelAbstract implements UserInterface {
     static DEF_ACTIVE_STATUS_AFTR_REG: boolean = false
     static MIN_FULL_NAME_LENGTH: number = 6
     static MAX_FULL_NAME_LENGTH: number = 100
@@ -51,4 +53,11 @@ export class User extends ModelAbstract {
         this.isActive = isActive;
     }
     
+    signIn(): AuthServicePayloadInterface {
+        return {
+            email: this.getEmail(),
+            fullName: this.getFullName(),
+            phone: this.getPhone(),
+        }
+    }
 }

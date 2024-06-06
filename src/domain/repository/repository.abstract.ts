@@ -1,9 +1,13 @@
-import { DeleteResult, FindManyOptions, InsertResult, Repository, UpdateResult } from "typeorm";
+import { FindManyOptions, Repository } from "typeorm";
 import { ModelInterface } from "../models/model.interface";
 import { RepositoryInterface } from "./repository.interface";
-import { InjectRepository } from "@nestjs/typeorm";
 import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
-import { PageOptionsDtoInterface } from "../dtos";
+import { 
+    CreateResultDtoInterface, 
+    DeleteResultDtoInterface, 
+    PageOptionsDtoInterface, 
+    UpdateResultDtoInterface 
+} from "../dtos";
 import { MetaPaginationResponseDto } from "src/infra/dtos";
 import { PaginateResultDto } from "src/infra/dtos/result/paginate-result.dto";
 
@@ -27,17 +31,17 @@ export abstract class RepositoryAbstract<T extends HasId> implements RepositoryI
         return await this.repository.findOneBy({ id: id }) 
     }
 
-    async create(data: QueryDeepPartialEntity<T>): Promise<InsertResult> {
+    async create(data: QueryDeepPartialEntity<T>): Promise<CreateResultDtoInterface> {
         return await this.repository.insert(data)
     }
 
-    async update(data: QueryDeepPartialEntity<T>, id: any): Promise<UpdateResult> {
+    async update(data: QueryDeepPartialEntity<T>, id: any): Promise<UpdateResultDtoInterface> {
         return await this.repository.update({
             id: id
         }, data)
     }
 
-    async delete(id: any): Promise<DeleteResult> {
+    async delete(id: any): Promise<DeleteResultDtoInterface> {
         return await this.repository.delete({ id: id })
     }
     

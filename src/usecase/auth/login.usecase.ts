@@ -1,16 +1,16 @@
+import { AuthServiceInterface, AuthServicePayloadInterface } from "src/domain/auth";
 import { AuthLoginResponseInterface } from "src/domain/dtos";
 import { EncryptInterface } from "src/domain/encrypt";
 import { UserRepositoryInterface } from "src/domain/repository/user.repository.interface";
 import { UseCaseInterface } from "src/domain/usecase";
-import { AuthService } from "src/infra/auth";
 import { AuthLoginDto } from "src/infra/dtos";
 import { UserMapper } from "src/infra/mappers/user.mapper";
 
-export class AuthLoginUseCase implements UseCaseInterface {
+export class LoginUseCase implements UseCaseInterface {
     constructor(
         private readonly userRepository: UserRepositoryInterface,
         private readonly encryptService: EncryptInterface,
-        private readonly authService: AuthService,
+        private readonly authService: AuthServiceInterface,
     ){}
 
     async execute(creds: AuthLoginDto) {
@@ -24,8 +24,8 @@ export class AuthLoginUseCase implements UseCaseInterface {
             return null
         }
 
-        const payload = new UserMapper().asSingle(user)
-        const access_token = await this.authService.signIn(Object.assign({}, payload))
+        const authServicePayload: AuthServicePayloadInterface = user.signIn()
+        const access_token = await this.authService.signIn(Object.assign({}, authServicePayload))
 
         const response: AuthLoginResponseInterface = {
             access_token
