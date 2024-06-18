@@ -6,6 +6,7 @@ import { EncryptModule } from '../encrypt/encrypt.module';
 import { EnvironmentModule } from '../config/environment/environment.module';
 import { AuthProxyRegister } from './registers/auth.proxy-register';
 import { AuthModule } from '../auth';
+import { MappersModule } from '../mappers/mappers.module';
 
 @Module({
     imports: [
@@ -13,6 +14,7 @@ import { AuthModule } from '../auth';
         EncryptModule,
         EnvironmentModule,
         AuthModule,
+        MappersModule,
     ]
 })
 export class UseCasesProxyModule {

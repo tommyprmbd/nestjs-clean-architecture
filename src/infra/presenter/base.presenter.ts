@@ -22,14 +22,10 @@ export class BasePresenter implements PresenterInterface {
         meta: MetaResponseDto = new MetaResponseDto()
     ){
         this.status = status
-        if (data instanceof PaginateResultDto) {
-            const setupMeta: MetaResponseDto = new MetaResponseDto(data.pagination)
-            this.data = this.transform(data.data)
-            this.meta = setupMeta
-        } else {
-            this.data = this.transform(data)
-            this.meta = meta
-        }
+        this.data = data
+
+        this.meta = this.transformMeta(meta)
+        this.data = this.transform(data)
     }
 
     transform(data: any) {
@@ -62,10 +58,32 @@ export class BasePresenter implements PresenterInterface {
             }
         }
 
+        if (data instanceof PaginateResultDto) {
+            data = data.data
+            if (data.length > 0) {
+                const entity = data[0].constructor.name
+                // const mapper = 
+            }
+        }
+
         if (data instanceof Object) {
             return data
         }
 
         return null
+    }
+
+    transformMeta(meta: any) {
+        if (this.data instanceof PaginateResultDto) {
+            meta = new MetaResponseDto(this.data.pagination)
+        }
+
+        return meta
+    }
+
+    getMapper(entity: string) {
+        // strip 'entity' string
+        let entityName = entity.replace(/Entity$/, '');
+        let mapperName = `${entityName}Mapper`;
     }
 }

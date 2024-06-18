@@ -4,9 +4,7 @@ import { JwtAuthGuard } from 'src/infra/auth';
 import { CreateUserDto, PageOptionsDto, UpdateUserDto } from 'src/infra/dtos';
 import { BasePresenter } from 'src/infra/presenter/base.presenter';
 import { UseCasesProxy } from 'src/infra/use-cases-proxy/use-cases.proxy';
-import { UserCreateUseCase, UserDeleteUseCase, UserFindAllUseCase } from 'src/usecase/users';
-import { UserFindByIdUseCase } from 'src/usecase/users/find-by-id.usecase';
-import { UserUpdateUseCase } from 'src/usecase/users/update.usecase';
+import { UserCreateUseCase, UserDeleteUseCase, UserFindAllUseCase, UserFindByIdUseCase, UserUpdateUseCase } from 'src/usecase/users';
 
 @ApiTags('User')
 @Controller('users')
