@@ -4,7 +4,6 @@ import { EncryptInterface } from "src/domain/encrypt";
 import { UserRepositoryInterface } from "src/domain/repository/user.repository.interface";
 import { UseCaseInterface } from "src/domain/usecase";
 import { AuthLoginDto } from "src/infra/dtos";
-import { UserMapper } from "src/infra/mappers/user.mapper";
 
 export class LoginUseCase implements UseCaseInterface {
     constructor(

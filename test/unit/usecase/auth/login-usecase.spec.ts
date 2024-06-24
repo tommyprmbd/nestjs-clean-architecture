@@ -1,60 +1,74 @@
-import { AuthLoginDtoInterface } from "./../../../../src/domain/dtos"
-import { EncryptInterface } from "./../../../../src/domain/encrypt"
-import { UserInterface } from "./../../../../src/domain/models/user.interface"
-import { UserRepositoryInterface } from "./../../../../src/domain/repository/user.repository.interface"
-import { LoginUseCase } from "./../../../../src/usecase/auth/login.usecase"
-import { authLoginDtoInterfaceMock } from "./../../../mock/domain/dtos/auth/auth-login-dto-interface.mock"
-import { encryptInterfaceMock } from "./../../../mock/domain/encrypt/encrypt-interface.mock"
-import { userRepositoryInterfaceMock } from "./../../../mock/domain/repository/user-repository-interface.mock"
-import { AuthServiceInterface, AuthServicePayloadInterface } from "./../../../../src/domain/auth"
-import { authServiceInterfaceMock } from "./../../../mock/domain/auth/auth-service-interface.mock"
-import { authServicePayloadInterfaceMock } from "./../../../mock/domain/auth/auth-service-payload-interface.mock"
+import { EncryptServiceMock } from "../../../mock/infra/encrypt/encrypt-service.mock";
+import { AuthServiceInterface, AuthServicePayloadInterface } from "../../../../src/domain/auth";
+import { EncryptInterface } from "../../../../src/domain/encrypt";
+import { AuthLoginDto } from "../../../../src/infra/dtos";
+import { LoginUseCase } from "../../../../src/usecase/auth/login.usecase"
+import { UserRepositoryMock } from "../../../mock/infra/repository/user-repository.mock";
+import { AuthServiceMock } from "../../../mock/infra/auth/auth-service.mock";
 
 describe('LoginUseCase', () => {
     let loginUseCase: LoginUseCase
-    let user: UserInterface = null
 
-    let userRepositoryInterface: UserRepositoryInterface = userRepositoryInterfaceMock
-    let authLoginDtoInterface: AuthLoginDtoInterface = authLoginDtoInterfaceMock
-    let encryptInterface: EncryptInterface = encryptInterfaceMock
-    let authServiceInterface: AuthServiceInterface = authServiceInterfaceMock
-    let authServicePayloadInterface: AuthServicePayloadInterface = authServicePayloadInterfaceMock
+    let userRepository: UserRepositoryMock
+    let encryptService: EncryptServiceMock
+    let authService: AuthServiceMock
+
+    let authLoginDto: AuthLoginDto = new AuthLoginDto()
+    authLoginDto.email = 'example@mail.com'
+    authLoginDto.password = 'P@ssw0rd'
 
     beforeEach(async () => {
-        loginUseCase = new LoginUseCase(userRepositoryInterface, encryptInterface, authServiceInterface)
+        userRepository = new UserRepositoryMock()
+        encryptService = new EncryptServiceMock()
+        authService = new AuthServiceMock()
+        loginUseCase = new LoginUseCase(userRepository, encryptService, authService)
     })
 
     it('should be defined', () => {
         expect(loginUseCase).toBeDefined()
     })
 
-    describe('execute()', () => {
-        describe('userRepository.findByEmail()', () => {
-            it('should be return User model', async () => {
-                user = await userRepositoryInterface.findByEmail(authLoginDtoInterface.getEmail())
-                expect(user).toBe(user)
-            })
-        })
+    it('should return null if user not found', async () => {
+        userRepository.findByEmail.mockResolvedValue(null)
 
-        describe('encryptService.comparePassword()', () => {
-            it('should be return boolean', async () => {
-                let isMatch = await encryptInterface.comparePassword(authLoginDtoInterface.getPassword(), user.getPassword())
-                expect(typeof isMatch).toBe('boolean')
-            })
-            it('should be return true', async () => {
-                let isMatch = await encryptInterface.comparePassword(authLoginDtoInterface.getPassword(), user.getPassword())
-                expect(isMatch).toBeTruthy()
-            })
-        })
+        const result = await loginUseCase.execute(authLoginDto)
 
-        describe('authService.signIn()', () => {
-            it('should be return string', async () => {
-                let token = await authServiceInterface.login(authServicePayloadInterface)
-                expect(typeof token).toBe('string')
-            })
-            it('should be return token', async () => {
-                expect(await authServiceInterface.login(authServicePayloadInterface)).toBe('token')
-            })
-        })
+        expect(result).toBeNull()
+        expect(userRepository.findByEmail).toHaveBeenCalledWith(authLoginDto.email)
+    })
+
+    it('should return null if password does not match', async () => {
+        const user = { getPassword: () => 'hashedPassword' }
+        userRepository.findByEmail.mockResolvedValue(user)
+        encryptService.comparePassword.mockResolvedValue(false)
+
+        const result = await loginUseCase.execute(authLoginDto)
+
+        expect(result).toBeNull()
+        expect(userRepository.findByEmail).toHaveBeenCalledWith(authLoginDto.email)
+        expect(encryptService.comparePassword).toHaveBeenCalledWith(authLoginDto.password, 'hashedPassword')
+    })
+
+    it('should return access token if login is successfull', async () => {
+        const user = { getPassword: () => 'hashedPassword', login: jest.fn() }
+        const authServicePayload: AuthServicePayloadInterface = {
+            email: 'example@mail.com',
+            fullName: 'P@ssw0rd',
+            phone: '085708',
+        }
+        const accessToken = 'accessToken'
+
+        userRepository.findByEmail.mockResolvedValue(user)
+        encryptService.comparePassword.mockResolvedValue(true)
+        user.login.mockReturnValue(authServicePayload)
+        authService.login.mockResolvedValue(accessToken)
+
+        const result = await loginUseCase.execute(authLoginDto)
+
+        expect(result).toEqual({ access_token: accessToken })
+        expect(userRepository.findByEmail).toHaveBeenCalledWith(authLoginDto.email)
+        expect(encryptService.comparePassword).toHaveBeenCalledWith(authLoginDto.password, 'hashedPassword')
+        expect(user.login).toHaveBeenCalled();
+        expect(authService.login).toHaveBeenCalledWith(authServicePayload)
     })
 })
