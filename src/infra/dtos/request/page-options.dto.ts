@@ -1,9 +1,8 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform, Type } from "class-transformer";
 import { IsEnum, IsInt, IsOptional } from "class-validator";
-import { OrderDirectionEnum } from "src/domain/common";
+import { OrderDirectionEnum } from "./../../../domain/common/enums/order-direction.enum";
 import { PageOptionsDtoInterface } from "src/domain/dtos";
-import { ModelInterface } from "src/domain/models/model.interface";
 
 export class PageOptionsDto implements PageOptionsDtoInterface {
     @ApiProperty({

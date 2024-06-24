@@ -1,9 +1,9 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Transform } from "class-transformer";
 import { IsEmail, IsNotEmpty, IsNumberString, IsString, IsStrongPassword, MaxLength, MinLength } from "class-validator";
-import { CreateUserDtoInterface } from "src/domain/dtos";
-import { User } from "src/domain/models";
-import { StringHelper } from "src/infra/common";
+import { CreateUserDtoInterface } from "./../../../../src/domain/dtos";
+import { User } from "./../../../domain/models/user";
+import { StringHelper } from "./../../common/helpers/string.helper";
 
 export class CreateUserDto implements CreateUserDtoInterface {
     @ApiProperty({

@@ -1,5 +1,6 @@
 import { UserMapperInterface } from "src/domain/mapper/user-mapper.interface";
 import { User } from "src/domain/models";
+import { PaginateResultDto } from "../dtos";
 
 export class UserMapper implements UserMapperInterface {
     public asList(objects: User[]): User[] {
@@ -33,5 +34,10 @@ export class UserMapper implements UserMapperInterface {
         user.setCreatedAt(object.getCreatedAt())
         user.setUpdatedAt(object.getUpdatedAt())
         return user
+    }
+    
+    public fromPagination(object: PaginateResultDto<User>): PaginateResultDto<User> {
+        object.data = this.asList(object.data)
+        return object
     }
 }

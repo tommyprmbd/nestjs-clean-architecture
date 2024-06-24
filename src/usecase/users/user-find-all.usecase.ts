@@ -11,7 +11,6 @@ export class UserFindAllUseCase implements UseCaseInterface {
 
     async execute(options?: PageOptionsDtoInterface) {
         let result = await this.repository.paginate(options)
-        result.data = this.mapper.asList(result.data)
-        return result
+        return this.mapper.fromPagination(result)
     }
 }

@@ -6,6 +6,7 @@ import {
     CreateResultDtoInterface, 
     DeleteResultDtoInterface, 
     PageOptionsDtoInterface, 
+    PaginateResultDtoInterface, 
     UpdateResultDtoInterface 
 } from "../dtos";
 import { MetaPaginationResponseDto } from "src/infra/dtos";
@@ -45,7 +46,7 @@ export abstract class RepositoryAbstract<T extends HasId> implements RepositoryI
         return await this.repository.delete({ id: id })
     }
     
-    async paginate(pageOptionsDto: PageOptionsDtoInterface): Promise<PaginateResultDto<T>> {
+    async paginate(pageOptionsDto: PageOptionsDtoInterface): Promise<PaginateResultDtoInterface> {
         const queryBuilder = this.repository.createQueryBuilder('t')
 
         queryBuilder
