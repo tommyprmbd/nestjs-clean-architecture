@@ -1,3 +1,3 @@
 export interface AuthServiceInterface {
-    signIn(payload: any): Promise<string>
+    login(payload: any): Promise<string>
 }

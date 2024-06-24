@@ -24,8 +24,8 @@ export class LoginUseCase implements UseCaseInterface {
             return null
         }
 
-        const authServicePayload: AuthServicePayloadInterface = user.signIn()
-        const access_token = await this.authService.signIn(Object.assign({}, authServicePayload))
+        const authServicePayload: AuthServicePayloadInterface = user.login()
+        const access_token = await this.authService.login(Object.assign({}, authServicePayload))
 
         const response: AuthLoginResponseInterface = {
             access_token

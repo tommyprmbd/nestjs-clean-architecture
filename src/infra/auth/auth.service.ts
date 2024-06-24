@@ -10,7 +10,7 @@ export class AuthService implements AuthServiceInterface {
         private readonly jwtService: JwtService,
     ){}
 
-    async signIn(payload: any) {
+    async login(payload: any) {
         const options: JwtSignOptions = {
             secret: this.jwtConfig.getSecret(),
             algorithm: 'HS512'
