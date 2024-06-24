@@ -5,7 +5,7 @@ export const createUserDtoInterfaceMock: CreateUserDtoInterface = {
 
     getEmail: jest.fn().mockReturnValue('email'),
 
-    getPassword: jest.fn().mockReturnValue('password'),
+    getPassword: jest.fn().mockReturnValue('abcdeF12!'),
 
     getPhone: jest.fn().mockReturnValue('085708'),
 

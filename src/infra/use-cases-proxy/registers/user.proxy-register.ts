@@ -44,9 +44,12 @@ export class UserProxyRegister implements UseCaseProxyRegisterInterface {
                 useFactory: (repository: UserRepository, encrypt: EncryptService) => new UseCasesProxy(new UserCreateUseCase(repository, encrypt)) 
             },
             {
-                inject: [UserRepository],
+                inject: [
+                    UserRepository,
+                    EncryptService,
+                ],
                 provide: UserUpdateUseCase.name,
-                useFactory: (repository: UserRepository) => new UseCasesProxy(new UserUpdateUseCase(repository)) 
+                useFactory: (repository: UserRepository, encrypt: EncryptService) => new UseCasesProxy(new UserUpdateUseCase(repository, encrypt)) 
             },
             {
                 inject: [UserRepository],

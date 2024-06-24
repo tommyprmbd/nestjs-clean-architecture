@@ -1,4 +1,5 @@
 import { AuthServicePayloadInterface } from "../auth"
+import { CreateUserDtoInterface, UpdateUserDtoInterface } from "../dtos"
 import { ModelAbstract } from "./model.abstract"
 import { UserInterface } from "./user.interface"
 
@@ -53,11 +54,23 @@ export class User extends ModelAbstract implements UserInterface {
         this.isActive = isActive;
     }
     
-    signIn(): AuthServicePayloadInterface {
+    login(): AuthServicePayloadInterface {
         return {
             email: this.getEmail(),
             fullName: this.getFullName(),
             phone: this.getPhone(),
         }
+    }
+
+    create(createUserDtoInterface: CreateUserDtoInterface) {
+        this.setEmail(createUserDtoInterface.getEmail())
+        this.setPassword(createUserDtoInterface.getPassword())
+        this.setFullName(createUserDtoInterface.getFullName())
+        this.setPhone(createUserDtoInterface.getPhone())
+        this.setIsActive(true)
+    }
+
+    update(updateUserDtoInterface: UpdateUserDtoInterface) {
+        this.setFullName(updateUserDtoInterface.getFullName())
     }
 }

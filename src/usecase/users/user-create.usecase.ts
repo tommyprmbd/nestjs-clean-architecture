@@ -1,3 +1,4 @@
+import { User } from "./../../domain/models";
 import { CreateUserDtoInterface } from "./../../domain/dtos";
 import { EncryptInterface } from "./../../domain/encrypt";
 import { UserRepositoryInterface } from "./../../domain/repository/user.repository.interface";
@@ -13,6 +14,9 @@ export class UserCreateUseCase implements UseCaseInterface {
         const hashedPassword = await this.encrypt.hashPassword(createUserDtoInterface.getPassword())
         createUserDtoInterface.setPassword(hashedPassword)
 
-        return await this.repository.create(createUserDtoInterface)
+        const user = new User();
+        user.create(createUserDtoInterface)
+
+        return await this.repository.create(user)
     }
 }

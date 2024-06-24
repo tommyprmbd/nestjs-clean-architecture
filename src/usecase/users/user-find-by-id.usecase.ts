@@ -9,7 +9,6 @@ export class UserFindByIdUseCase implements UseCaseInterface {
     ){}
 
     async execute(id: number) {
-        const entity = await this.repository.findById(id)
-        return this.mapper.asSingle(entity)
+        return this.mapper.asSingle(await this.repository.findById(id))
     }
 }
