@@ -1,9 +1,9 @@
-import { isEmpty } from "src/lib/utils/helper";
+import { isEmpty } from "./../../lib/utils/helper";
 import { UpdateUserDtoInterface } from "./../../domain/dtos";
 import { User } from "./../../domain/models";
 import { UserRepositoryInterface } from "./../../domain/repository/user.repository.interface";
 import { UseCaseInterface } from "./../../domain/usecase";
-import { EncryptInterface } from "src/domain/encrypt";
+import { EncryptInterface } from "./../../domain/encrypt";
 
 export class UserUpdateUseCase implements UseCaseInterface {
     constructor(
@@ -16,7 +16,7 @@ export class UserUpdateUseCase implements UseCaseInterface {
             const hashedPassword = await this.encrypt.hashPassword(updateUserDtoInterface.getPassword())
             updateUserDtoInterface.setPassword(hashedPassword)
         }
-        
+
         const user = new User()
         user.update(updateUserDtoInterface)
 

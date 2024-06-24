@@ -3,7 +3,7 @@ import { Transform } from "class-transformer";
 import { IsEmail, IsNotEmpty, IsNumberString, IsString, IsStrongPassword, MaxLength, MinLength } from "class-validator";
 import { CreateUserDtoInterface } from "./../../../../src/domain/dtos";
 import { User } from "./../../../domain/models/user";
-import { StringHelper } from "./../../common/helpers/string.helper";
+import { StringHelper } from "./../../../lib/utils/helper";
 
 export class CreateUserDto implements CreateUserDtoInterface {
     @ApiProperty({

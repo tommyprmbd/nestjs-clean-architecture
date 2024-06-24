@@ -1,4 +1,4 @@
-import { User } from "src/domain/models";
+import { User } from "./../../domain/models";
 import { CreateUserDtoInterface } from "./../../domain/dtos";
 import { EncryptInterface } from "./../../domain/encrypt";
 import { UserRepositoryInterface } from "./../../domain/repository/user.repository.interface";

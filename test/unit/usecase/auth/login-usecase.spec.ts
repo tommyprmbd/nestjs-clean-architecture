@@ -49,11 +49,11 @@ describe('LoginUseCase', () => {
 
         describe('authService.signIn()', () => {
             it('should be return string', async () => {
-                let token = await authServiceInterface.signIn(authServicePayloadInterface)
+                let token = await authServiceInterface.login(authServicePayloadInterface)
                 expect(typeof token).toBe('string')
             })
             it('should be return token', async () => {
-                expect(await authServiceInterface.signIn(authServicePayloadInterface)).toBe('token')
+                expect(await authServiceInterface.login(authServicePayloadInterface)).toBe('token')
             })
         })
     })
