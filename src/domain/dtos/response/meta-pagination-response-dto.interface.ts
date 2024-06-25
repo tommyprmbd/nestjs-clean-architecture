@@ -1,11 +1,11 @@
 export interface MetaPaginationResponseDtoInterface {
-    getPage(): number
+  getPage(): number;
 
-    getItemCount(): number
+  getItemCount(): number;
 
-    getPageCount(): number
+  getPageCount(): number;
 
-    isHasPreviousPage(): boolean
+  isHasPreviousPage(): boolean;
 
-    isHasNextPage(): boolean
+  isHasNextPage(): boolean;
 }

@@ -9,7 +9,7 @@ import { DbConfigService } from '../environment/db-config.service';
     TypeOrmModuleMaster.forRootAsync({
       imports: [EnvironmentModule],
       inject: [DbConfigService],
-      useFactory: TypeOrmOptions
+      useFactory: TypeOrmOptions,
     }),
   ],
 })

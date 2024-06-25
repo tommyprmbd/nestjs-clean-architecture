@@ -1,7 +1,7 @@
-import { UsecaseProxyProviderType } from "../common"
+import { UsecaseProxyProviderType } from '../common';
 
 export interface UseCaseProxyRegisterInterface {
-    registerExports(): Array<string>
+  registerExports(): Array<string>;
 
-    registerProviders(): Array<UsecaseProxyProviderType>
+  registerProviders(): Array<UsecaseProxyProviderType>;
 }

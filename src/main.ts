@@ -1,6 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ErrorExceptionFilter, HttpExceptionFilter, RequestInterceptorFilter, TypeORMExceptionFilter } from './infra/filters';
+import {
+  ErrorExceptionFilter,
+  HttpExceptionFilter,
+  RequestInterceptorFilter,
+  TypeORMExceptionFilter,
+} from './infra/filters';
 import { LoggerContext, LoggerService } from './infra/logger';
 import { ConsoleLogger, ValidationPipe } from '@nestjs/common';
 import { AppConfigService } from './infra/config/environment';
@@ -11,7 +16,7 @@ import { SwaggerConfigService } from './infra/config/environment/swagger-config.
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const appConfigServer = app.get(AppConfigService);
-  const loggerService = app.get(LoggerService)
+  const loggerService = app.get(LoggerService);
   const appSwaggerService = app.get(SwaggerConfigService);
 
   app.useGlobalFilters(new ErrorExceptionFilter(new LoggerService()));
@@ -25,27 +30,30 @@ async function bootstrap() {
       disableErrorMessages: false,
       whitelist: true,
       transform: true,
-    })
+    }),
   );
 
   app.useGlobalInterceptors(new RequestInterceptorFilter(new LoggerService()));
 
-  const env = appConfigServer.getEnvironment()
-  if (env.toLocaleLowerCase() !== AppEnvironmentConfigEnum.PRODUCTION.toLocaleLowerCase()) {
+  const env = appConfigServer.getEnvironment();
+  if (
+    env.toLocaleLowerCase() !==
+    AppEnvironmentConfigEnum.PRODUCTION.toLocaleLowerCase()
+  ) {
     loggerService.log(LoggerContext.SWAGGER, 'Setting up Swagger.');
     const swaggerConfig = new DocumentBuilder()
       .setTitle(appSwaggerService.getTitle())
       .setDescription(appSwaggerService.getDescription())
       .setVersion(appSwaggerService.getVersion())
-      .build()
-    const document = SwaggerModule.createDocument(app, swaggerConfig)
-    SwaggerModule.setup(appSwaggerService.getPath(), app, document)
+      .build();
+    const document = SwaggerModule.createDocument(app, swaggerConfig);
+    SwaggerModule.setup(appSwaggerService.getPath(), app, document);
   }
 
-  const port = appConfigServer.getPort()
-  const logger = new ConsoleLogger()
+  const port = appConfigServer.getPort();
+  const logger = new ConsoleLogger();
   await app.listen(port, () => {
-    logger.log(`Application running on port ${port}`)
+    logger.log(`Application running on port ${port}`);
   });
 }
 bootstrap();

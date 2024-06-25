@@ -1,1 +1,1 @@
-export * from './encrypt.interface'
+export * from './encrypt.interface';

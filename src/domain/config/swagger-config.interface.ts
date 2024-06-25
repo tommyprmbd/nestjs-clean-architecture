@@ -1,9 +1,9 @@
 export interface SwaggerConfigInterface {
-    getTitle(): string
+  getTitle(): string;
 
-    getDescription(): string
+  getDescription(): string;
 
-    getVersion(): string
+  getVersion(): string;
 
-    getPath(): string
+  getPath(): string;
 }

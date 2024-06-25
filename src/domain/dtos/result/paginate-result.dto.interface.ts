@@ -1,7 +1,7 @@
-import { MetaPaginationResponseDtoInterface } from "../response/meta-pagination-response-dto.interface"
+import { MetaPaginationResponseDtoInterface } from '../response/meta-pagination-response-dto.interface';
 
 export interface PaginateResultDtoInterface {
-    getData()
+  getData();
 
-    getPagination(): MetaPaginationResponseDtoInterface | null
+  getPagination(): MetaPaginationResponseDtoInterface | null;
 }

@@ -1,7 +1,7 @@
 export interface AuthServicePayloadInterface {
-    email: string
+  email: string;
 
-    fullName: string
+  fullName: string;
 
-    phone: string
+  phone: string;
 }

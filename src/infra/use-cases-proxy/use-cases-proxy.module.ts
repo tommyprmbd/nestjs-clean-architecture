@@ -9,52 +9,52 @@ import { AuthModule } from '../auth';
 import { MappersModule } from '../mappers/mappers.module';
 
 @Module({
-    imports: [
-        RepositoriesModule,
-        EncryptModule,
-        EnvironmentModule,
-        AuthModule,
-        MappersModule,
-    ]
+  imports: [
+    RepositoriesModule,
+    EncryptModule,
+    EnvironmentModule,
+    AuthModule,
+    MappersModule,
+  ],
 })
 export class UseCasesProxyModule {
-    private static useCaseRegisterList = [
-        new UserProxyRegister(),
-        new AuthProxyRegister(),
-    ]
+  private static useCaseRegisterList = [
+    new UserProxyRegister(),
+    new AuthProxyRegister(),
+  ];
 
-    private static providersList = []
+  private static providersList = [];
 
-    private static exportsList = []
+  private static exportsList = [];
 
-    private static registerProvidersList(proxy: UseCaseProxyRegisterInterface) {
-        const providers = proxy.registerProviders()
-        for (let index = 0; index < providers.length; index++) {
-            this.providersList.push(providers[index])
-        }
+  private static registerProvidersList(proxy: UseCaseProxyRegisterInterface) {
+    const providers = proxy.registerProviders();
+    for (let index = 0; index < providers.length; index++) {
+      this.providersList.push(providers[index]);
     }
+  }
 
-    private static registerExportsList(proxy: UseCaseProxyRegisterInterface) {
-        const exports = proxy.registerExports()
-        for (let index = 0; index < exports.length; index++) {
-            this.exportsList.push(exports[index])
-        }
+  private static registerExportsList(proxy: UseCaseProxyRegisterInterface) {
+    const exports = proxy.registerExports();
+    for (let index = 0; index < exports.length; index++) {
+      this.exportsList.push(exports[index]);
     }
+  }
 
-    static registerList() {
-        this.useCaseRegisterList.forEach((v) => {
-            this.registerExportsList(v)
-            this.registerProvidersList(v)
-        })
-    }
+  static registerList() {
+    this.useCaseRegisterList.forEach((v) => {
+      this.registerExportsList(v);
+      this.registerProvidersList(v);
+    });
+  }
 
-    static register(): DynamicModule {
-        this.registerList()
+  static register(): DynamicModule {
+    this.registerList();
 
-        return {
-            module: UseCasesProxyModule,
-            providers: this.providersList,
-            exports: this.exportsList,
-        }
-    }
+    return {
+      module: UseCasesProxyModule,
+      providers: this.providersList,
+      exports: this.exportsList,
+    };
+  }
 }

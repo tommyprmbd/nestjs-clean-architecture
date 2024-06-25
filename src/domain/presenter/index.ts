@@ -1,1 +1,1 @@
-export * from './presenter.interface'
+export * from './presenter.interface';

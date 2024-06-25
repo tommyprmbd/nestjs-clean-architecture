@@ -1,5 +1,5 @@
 export interface JwtConfigInterface {
-    getSecret(): string
+  getSecret(): string;
 
-    getAlgorithm(): string
+  getAlgorithm(): string;
 }

@@ -1,11 +1,11 @@
-import { OrderDirectionEnum } from "src/domain/common";
+import { OrderDirectionEnum } from 'src/domain/common';
 
 export interface PageOptionsDtoInterface {
-    getOrder(): OrderDirectionEnum
+  getOrder(): OrderDirectionEnum;
 
-    getPage(): number
+  getPage(): number;
 
-    getTake(): number
+  getTake(): number;
 
-    getSkip(): number
+  getSkip(): number;
 }

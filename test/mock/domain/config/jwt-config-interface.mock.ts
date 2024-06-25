@@ -1,7 +1,7 @@
-import { JwtConfigInterface } from "src/domain/config";
+import { JwtConfigInterface } from 'src/domain/config';
 
 export const jwtConfigInterfaceMock: JwtConfigInterface = {
-    getSecret: jest.fn().mockReturnValue('secret'),
+  getSecret: jest.fn().mockReturnValue('secret'),
 
-    getAlgorithm: jest.fn().mockReturnValue('HS512')
-}
+  getAlgorithm: jest.fn().mockReturnValue('HS512'),
+};

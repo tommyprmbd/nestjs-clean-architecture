@@ -1,19 +1,19 @@
-import { DbConfigInterface } from "src/domain/config";
+import { DbConfigInterface } from 'src/domain/config';
 
 export const dbConfigInterfaceMock: DbConfigInterface = {
-    getType: jest.fn().mockReturnValue('mysql'),
-    
-    getHost: jest.fn().mockReturnValue('localhost'),
+  getType: jest.fn().mockReturnValue('mysql'),
 
-    getPort: jest.fn().mockReturnValue(3306),
+  getHost: jest.fn().mockReturnValue('localhost'),
 
-    getName: jest.fn().mockReturnValue('bsi'),
+  getPort: jest.fn().mockReturnValue(3306),
 
-    getUsername: jest.fn().mockReturnValue('root'),
+  getName: jest.fn().mockReturnValue('bsi'),
 
-    getPassword: jest.fn().mockReturnValue('password'),
+  getUsername: jest.fn().mockReturnValue('root'),
 
-    isSync: jest.fn().mockReturnValue(true),
+  getPassword: jest.fn().mockReturnValue('password'),
 
-    isAutoLoadEntities: jest.fn().mockReturnValue(true),
-}
+  isSync: jest.fn().mockReturnValue(true),
+
+  isAutoLoadEntities: jest.fn().mockReturnValue(true),
+};

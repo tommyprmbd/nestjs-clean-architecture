@@ -9,23 +9,21 @@ import { JwtConfigService } from './jwt-config.service';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: [
-        './environment/.env'
-      ],
+      envFilePath: ['./environment/.env'],
       ignoreEnvFile: false,
-      isGlobal: true
+      isGlobal: true,
     }),
   ],
   providers: [
-    DbConfigService, 
-    EncryptConfigService, 
+    DbConfigService,
+    EncryptConfigService,
     AppConfigService,
     SwaggerConfigService,
     JwtConfigService,
   ],
   exports: [
-    DbConfigService, 
-    EncryptConfigService, 
+    DbConfigService,
+    EncryptConfigService,
     AppConfigService,
     SwaggerConfigService,
     JwtConfigService,

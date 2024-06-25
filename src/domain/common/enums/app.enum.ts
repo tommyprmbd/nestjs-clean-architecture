@@ -1,5 +1,5 @@
 export enum AppEnvironmentConfigEnum {
-    LOCAL = 'local',
-    STAGING = 'staging',
-    PRODUCTION = 'production',
+  LOCAL = 'local',
+  STAGING = 'staging',
+  PRODUCTION = 'production',
 }

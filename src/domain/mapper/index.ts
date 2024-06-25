@@ -1,1 +1,1 @@
-export * from './user-mapper.interface'
+export * from './user-mapper.interface';

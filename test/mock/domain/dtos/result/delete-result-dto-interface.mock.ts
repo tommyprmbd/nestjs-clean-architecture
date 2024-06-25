@@ -1,3 +1,3 @@
-import { DeleteResultDtoInterface } from "src/domain/dtos";
+import { DeleteResultDtoInterface } from 'src/domain/dtos';
 
-export const deleteResultDtoInterfaceMock: DeleteResultDtoInterface = {}
+export const deleteResultDtoInterfaceMock: DeleteResultDtoInterface = {};

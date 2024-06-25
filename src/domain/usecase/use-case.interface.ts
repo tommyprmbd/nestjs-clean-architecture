@@ -1,3 +1,3 @@
 export interface UseCaseInterface {
-    execute(...args)
+  execute(...args);
 }

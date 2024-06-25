@@ -1,9 +1,11 @@
-import { PaginateResultDtoInterface } from "../dtos";
-import { User } from "../models";
-import { MapperInterface } from "./mapper.interface";
+import { PaginateResultDtoInterface } from '../dtos';
+import { User } from '../models';
+import { MapperInterface } from './mapper.interface';
 
 export interface UserMapperInterface extends MapperInterface {
-    asSingleWithPassword(object: User): User
+  asSingleWithPassword(object: User): User;
 
-    fromPagination(object: PaginateResultDtoInterface): PaginateResultDtoInterface 
+  fromPagination(
+    object: PaginateResultDtoInterface,
+  ): PaginateResultDtoInterface;
 }

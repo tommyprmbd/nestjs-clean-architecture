@@ -1,1 +1,1 @@
-export * from './encrypt.service'
+export * from './encrypt.service';

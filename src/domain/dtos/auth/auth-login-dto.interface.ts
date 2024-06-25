@@ -1,5 +1,5 @@
 export interface AuthLoginDtoInterface {
-    getEmail(): string
+  getEmail(): string;
 
-    getPassword(): string
+  getPassword(): string;
 }

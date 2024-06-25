@@ -1,1 +1,1 @@
-export * from './enums/db.enum'
+export * from './enums/db.enum';

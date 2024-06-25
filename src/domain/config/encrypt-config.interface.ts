@@ -1,3 +1,3 @@
 export interface EncryptConfigInterface {
-    getSaltRound(): string|number
+  getSaltRound(): string | number;
 }

@@ -1,7 +1,7 @@
-import { AuthLoginDtoInterface } from "src/domain/dtos";
+import { AuthLoginDtoInterface } from 'src/domain/dtos';
 
 export const authLoginDtoInterfaceMock: AuthLoginDtoInterface = {
-    getEmail: jest.fn().mockReturnValue('username'),
-    
-    getPassword: jest.fn().mockReturnValue('password')
-}
+  getEmail: jest.fn().mockReturnValue('username'),
+
+  getPassword: jest.fn().mockReturnValue('password'),
+};

@@ -5,17 +5,17 @@ import { JwtConfigService } from '../config/environment';
 
 @Injectable()
 export class AuthService implements AuthServiceInterface {
-    constructor(
-        private readonly jwtConfig: JwtConfigService,
-        private readonly jwtService: JwtService,
-    ){}
+  constructor(
+    private readonly jwtConfig: JwtConfigService,
+    private readonly jwtService: JwtService,
+  ) {}
 
-    async login(payload: any) {
-        const options: JwtSignOptions = {
-            secret: this.jwtConfig.getSecret(),
-            algorithm: 'HS512'
-        }
+  async login(payload: any) {
+    const options: JwtSignOptions = {
+      secret: this.jwtConfig.getSecret(),
+      algorithm: 'HS512',
+    };
 
-        return this.jwtService.signAsync(payload, options);
-    }
+    return this.jwtService.signAsync(payload, options);
+  }
 }

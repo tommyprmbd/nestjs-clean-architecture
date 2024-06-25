@@ -1,21 +1,21 @@
 export interface UserInterface {
-    getFullName(): string
+  getFullName(): string;
 
-    setFullName(fullName: string): void
+  setFullName(fullName: string): void;
 
-    getEmail(): string
+  getEmail(): string;
 
-    setEmail(email: string): void
+  setEmail(email: string): void;
 
-    getPassword(): string
+  getPassword(): string;
 
-    setPassword(password: string): void
+  setPassword(password: string): void;
 
-    getPhone(): string
+  getPhone(): string;
 
-    setPhone(phone: string): void
+  setPhone(phone: string): void;
 
-    isIsActive(): boolean
+  isIsActive(): boolean;
 
-    setIsActive(isActive: boolean): void
+  setIsActive(isActive: boolean): void;
 }

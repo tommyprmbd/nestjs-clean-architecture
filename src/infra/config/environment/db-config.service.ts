@@ -5,37 +5,37 @@ import { DbConfigEnum } from 'src/infra/common';
 
 @Injectable()
 export class DbConfigService implements DbConfigInterface {
-    constructor(private readonly configService: ConfigService){}
-    
-    getType(): string {
-        return this.configService.get<string>(DbConfigEnum.DB_TYPE)
-    }
+  constructor(private readonly configService: ConfigService) {}
 
-    getHost(): string {
-        return this.configService.get<string>(DbConfigEnum.DB_HOST)
-    }
+  getType(): string {
+    return this.configService.get<string>(DbConfigEnum.DB_TYPE);
+  }
 
-    getPort(): number {
-        return this.configService.get<number>(DbConfigEnum.DB_PORT)
-    }
+  getHost(): string {
+    return this.configService.get<string>(DbConfigEnum.DB_HOST);
+  }
 
-    getName(): string {
-        return this.configService.get<string>(DbConfigEnum.DB_NAME)
-    }
+  getPort(): number {
+    return this.configService.get<number>(DbConfigEnum.DB_PORT);
+  }
 
-    getUsername(): string {
-        return this.configService.get<string>(DbConfigEnum.DB_USERNAME)
-    }
+  getName(): string {
+    return this.configService.get<string>(DbConfigEnum.DB_NAME);
+  }
 
-    getPassword(): string {
-        return this.configService.get<string>(DbConfigEnum.DB_PASSWORD)
-    }
+  getUsername(): string {
+    return this.configService.get<string>(DbConfigEnum.DB_USERNAME);
+  }
 
-    isSync(): boolean {
-        return this.configService.get<boolean>(DbConfigEnum.IS_SYNC)
-    }
+  getPassword(): string {
+    return this.configService.get<string>(DbConfigEnum.DB_PASSWORD);
+  }
 
-    isAutoLoadEntities(): boolean {
-        return this.configService.get<boolean>(DbConfigEnum.IS_AUTOLOAD_ENTITIES)
-    }
+  isSync(): boolean {
+    return this.configService.get<boolean>(DbConfigEnum.IS_SYNC);
+  }
+
+  isAutoLoadEntities(): boolean {
+    return this.configService.get<boolean>(DbConfigEnum.IS_AUTOLOAD_ENTITIES);
+  }
 }

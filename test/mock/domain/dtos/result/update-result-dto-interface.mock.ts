@@ -1,3 +1,3 @@
-import { UpdateResultDtoInterface } from "src/domain/dtos";
+import { UpdateResultDtoInterface } from 'src/domain/dtos';
 
-export const updateResultDtoInterfaceMock: UpdateResultDtoInterface = {}
+export const updateResultDtoInterfaceMock: UpdateResultDtoInterface = {};

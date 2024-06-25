@@ -6,31 +6,33 @@
  * @ Description:
  */
 
-import { AppEnvironmentConfigEnum } from "./../../../../src/domain/common";
-import { AppConfigInterface } from "./../../../../src/domain/config"
-import { appConfigInterfaceMock } from "./../../../mock/domain/config/app-config-interface.mock"
+import { AppEnvironmentConfigEnum } from './../../../../src/domain/common';
+import { AppConfigInterface } from './../../../../src/domain/config';
+import { appConfigInterfaceMock } from './../../../mock/domain/config/app-config-interface.mock';
 
 describe('AppConfigInterface', () => {
-    const port = 3000
-    const appConfigInterface: AppConfigInterface = appConfigInterfaceMock;
+  const port = 3000;
+  const appConfigInterface: AppConfigInterface = appConfigInterfaceMock;
 
-    it('should be defined', () => {
-        expect(appConfigInterface).toBeDefined()
-    })
+  it('should be defined', () => {
+    expect(appConfigInterface).toBeDefined();
+  });
 
-    describe('getEnvironment', () => {
-        it('should return string environment from AppEnvironmentConfigEnum', () => {
-            expect(appConfigInterface.getEnvironment()).toBe(AppEnvironmentConfigEnum.LOCAL)
-        })
-    })
+  describe('getEnvironment', () => {
+    it('should return string environment from AppEnvironmentConfigEnum', () => {
+      expect(appConfigInterface.getEnvironment()).toBe(
+        AppEnvironmentConfigEnum.LOCAL,
+      );
+    });
+  });
 
-    describe('getPort', () => {
-        it('should return number', () => {
-            expect(typeof appConfigInterface.getPort()).toBe('number')
-        })
+  describe('getPort', () => {
+    it('should return number', () => {
+      expect(typeof appConfigInterface.getPort()).toBe('number');
+    });
 
-        it(`should return port ${port}`, () => {
-            expect(appConfigInterface.getPort()).toBe(port)
-        })
-    })
-})
+    it(`should return port ${port}`, () => {
+      expect(appConfigInterface.getPort()).toBe(port);
+    });
+  });
+});

@@ -1,11 +1,9 @@
-import { OrderDirectionEnum } from "../common"
-
 export class ModelInterface {
-    id: number
+  id: number;
 
-    createdAt: Date
+  createdAt: Date;
 
-    updatedAt: Date
+  updatedAt: Date;
 
-    static DEFAULT_ORDER_KEY = 'createdAt'
+  static DEFAULT_ORDER_KEY = 'createdAt';
 }

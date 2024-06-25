@@ -1,5 +1,5 @@
 export interface AppConfigInterface {
-    getEnvironment(): string
+  getEnvironment(): string;
 
-    getPort(): number
+  getPort(): number;
 }

@@ -1,11 +1,11 @@
-import { SwaggerConfigInterface } from "src/domain/config";
+import { SwaggerConfigInterface } from 'src/domain/config';
 
 export const swaggerConfigInterfaceMock: SwaggerConfigInterface = {
-    getTitle: jest.fn().mockReturnValue('title'),
+  getTitle: jest.fn().mockReturnValue('title'),
 
-    getDescription: jest.fn().mockReturnValue('description'),
+  getDescription: jest.fn().mockReturnValue('description'),
 
-    getVersion: jest.fn().mockReturnValue('version'),
+  getVersion: jest.fn().mockReturnValue('version'),
 
-    getPath: jest.fn().mockReturnValue('path')
-}
+  getPath: jest.fn().mockReturnValue('path'),
+};

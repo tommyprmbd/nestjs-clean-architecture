@@ -1,7 +1,7 @@
 export interface UpdateUserDtoInterface {
-    getFullName(): string
+  getFullName(): string;
 
-    getPassword(): string
+  getPassword(): string;
 
-    setPassword(password: string): void
+  setPassword(password: string): void;
 }

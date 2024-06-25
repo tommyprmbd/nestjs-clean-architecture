@@ -4,12 +4,7 @@ import { UseCasesProxyModule } from '../use-cases-proxy/use-cases-proxy.module';
 import { AuthController } from './auth/auth.controller';
 
 @Module({
-  imports: [
-    UseCasesProxyModule.register(),
-  ],
-  controllers: [
-    UserController,
-    AuthController
-  ],
+  imports: [UseCasesProxyModule.register()],
+  controllers: [UserController, AuthController],
 })
 export class ControllersModule {}

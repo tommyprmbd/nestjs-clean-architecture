@@ -1,9 +1,9 @@
-import { UpdateUserDtoInterface } from "src/domain/dtos";
+import { UpdateUserDtoInterface } from 'src/domain/dtos';
 
 export const updateUserDtoInterfaceMock: UpdateUserDtoInterface = {
-    getFullName: jest.fn().mockReturnValue('fullname'),
+  getFullName: jest.fn().mockReturnValue('fullname'),
 
-    getPassword: jest.fn().mockReturnValue('abcdeF12!'),
+  getPassword: jest.fn().mockReturnValue('abcdeF12!'),
 
-    setPassword: jest.fn().mockReturnValue(null),
-}
+  setPassword: jest.fn().mockReturnValue(null),
+};
