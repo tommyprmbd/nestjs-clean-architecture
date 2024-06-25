@@ -14,7 +14,7 @@ export class CreateUserDto implements CreateUserDtoInterface {
     @MinLength(User.MIN_FULL_NAME_LENGTH)
     @MaxLength(User.MAX_FULL_NAME_LENGTH)
     @Transform(({value}) => StringHelper.toTitleCase(value))
-    readonly fullName: string
+    fullName: string
 
     @ApiProperty({
         example: 'tommy@gmail.com'
@@ -22,7 +22,7 @@ export class CreateUserDto implements CreateUserDtoInterface {
     @IsEmail()
     @IsNotEmpty()
     @Transform(({value}) => value.toLowerCase())
-    readonly email: string
+    email: string
 
     @ApiProperty({
         example: 'AaBb1992#'
@@ -34,7 +34,7 @@ export class CreateUserDto implements CreateUserDtoInterface {
         example: '0812345678'
     })
     @IsNumberString()
-    readonly phone: string
+    phone: string
 
     getFullName(): string {
         return this.fullName

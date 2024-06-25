@@ -28,47 +28,50 @@ describe('LoginUseCase', () => {
         expect(loginUseCase).toBeDefined()
     })
 
-    it('should return null if user not found', async () => {
-        userRepository.findByEmail.mockResolvedValue(null)
-
-        const result = await loginUseCase.execute(authLoginDto)
-
-        expect(result).toBeNull()
-        expect(userRepository.findByEmail).toHaveBeenCalledWith(authLoginDto.email)
+    describe('execute()', () => {
+        it('should return null if user not found', async () => {
+            userRepository.findByEmail.mockResolvedValue(null)
+    
+            const result = await loginUseCase.execute(authLoginDto)
+    
+            expect(result).toBeNull()
+            expect(userRepository.findByEmail).toHaveBeenCalledWith(authLoginDto.email)
+        })
+    
+        it('should return null if password does not match', async () => {
+            const user = { getPassword: () => 'hashedPassword' }
+            userRepository.findByEmail.mockResolvedValue(user)
+            encryptService.comparePassword.mockResolvedValue(false)
+    
+            const result = await loginUseCase.execute(authLoginDto)
+    
+            expect(result).toBeNull()
+            expect(userRepository.findByEmail).toHaveBeenCalledWith(authLoginDto.email)
+            expect(encryptService.comparePassword).toHaveBeenCalledWith(authLoginDto.password, 'hashedPassword')
+        })
+    
+        it('should return access token if login is successfull', async () => {
+            const user = { getPassword: () => 'hashedPassword', login: jest.fn() }
+            const authServicePayload: AuthServicePayloadInterface = {
+                email: 'example@mail.com',
+                fullName: 'P@ssw0rd',
+                phone: '085708',
+            }
+            const accessToken = 'accessToken'
+    
+            userRepository.findByEmail.mockResolvedValue(user)
+            encryptService.comparePassword.mockResolvedValue(true)
+            user.login.mockReturnValue(authServicePayload)
+            authService.login.mockResolvedValue(accessToken)
+    
+            const result = await loginUseCase.execute(authLoginDto)
+    
+            expect(result).toEqual({ access_token: accessToken })
+            expect(userRepository.findByEmail).toHaveBeenCalledWith(authLoginDto.email)
+            expect(encryptService.comparePassword).toHaveBeenCalledWith(authLoginDto.password, 'hashedPassword')
+            expect(user.login).toHaveBeenCalled();
+            expect(authService.login).toHaveBeenCalledWith(authServicePayload)
+        })
     })
 
-    it('should return null if password does not match', async () => {
-        const user = { getPassword: () => 'hashedPassword' }
-        userRepository.findByEmail.mockResolvedValue(user)
-        encryptService.comparePassword.mockResolvedValue(false)
-
-        const result = await loginUseCase.execute(authLoginDto)
-
-        expect(result).toBeNull()
-        expect(userRepository.findByEmail).toHaveBeenCalledWith(authLoginDto.email)
-        expect(encryptService.comparePassword).toHaveBeenCalledWith(authLoginDto.password, 'hashedPassword')
-    })
-
-    it('should return access token if login is successfull', async () => {
-        const user = { getPassword: () => 'hashedPassword', login: jest.fn() }
-        const authServicePayload: AuthServicePayloadInterface = {
-            email: 'example@mail.com',
-            fullName: 'P@ssw0rd',
-            phone: '085708',
-        }
-        const accessToken = 'accessToken'
-
-        userRepository.findByEmail.mockResolvedValue(user)
-        encryptService.comparePassword.mockResolvedValue(true)
-        user.login.mockReturnValue(authServicePayload)
-        authService.login.mockResolvedValue(accessToken)
-
-        const result = await loginUseCase.execute(authLoginDto)
-
-        expect(result).toEqual({ access_token: accessToken })
-        expect(userRepository.findByEmail).toHaveBeenCalledWith(authLoginDto.email)
-        expect(encryptService.comparePassword).toHaveBeenCalledWith(authLoginDto.password, 'hashedPassword')
-        expect(user.login).toHaveBeenCalled();
-        expect(authService.login).toHaveBeenCalledWith(authServicePayload)
-    })
 })
