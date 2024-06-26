@@ -1,0 +1,28 @@
+stages:
+  - linter
+  - test
+  - analyze
+  - build
+  - deploy
+
+linter:
+  stage: linter
+  image: node:alpine
+  tags:
+    - staging-runner
+  script:
+    - npm i eslint@^8.42.0 eslint-config-prettier@^9.0.0 eslint-plugin-prettier@^5.0.0
+    - npm run lint
+  allow_failure: true
+
+test:
+  stage: test
+  image: node:alpine
+  tags:
+    - staging-runner
+  script:
+    - npm i jest@^29.5.0 ts-jest@^29.1.0
+    - npm run test
+  needs:
+    - linter
+  allow_failure: true
