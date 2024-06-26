@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { UserMapperInterface } from './../../domain/mapper';
 import { UserRepositoryInterface } from './../../domain/repository/user.repository.interface';
 import { UseCaseInterface } from './../../domain/usecase';
@@ -9,6 +10,10 @@ export class UserFindByIdUseCase implements UseCaseInterface {
   ) {}
 
   async execute(id: number) {
-    return this.mapper.asSingle(await this.repository.findById(id));
+    const user = await this.repository.findById(id);
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    return this.mapper.asSingle(user);
   }
 }

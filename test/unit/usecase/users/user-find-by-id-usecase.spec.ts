@@ -1,49 +1,44 @@
-import { UserMapperInterface } from '../../../../src/domain/mapper';
-import { UserRepositoryInterface } from '../../../../src/domain/repository/user.repository.interface';
 import { UserFindByIdUseCase } from '../../../../src/usecase/users';
-import { userMapperInterfaceMock } from '../../../mock/domain/mapper/user-mapper-interface.mock';
-import { userRepositoryInterfaceMock } from '../../../mock/domain/repository/user-repository-interface.mock';
-import { UserInterface } from '../../../../src/domain/models/user.interface';
-import { userInterfaceMock } from '../../../mock/domain/model/user-interface.mock';
+import { UserMapperMock } from '../../../mock/infra/mapper/user-mapper.mock';
+import { UserRepositoryMock } from '../../../mock/infra/repository/user-repository.mock';
 
 describe('UserFindByIdUseCase', () => {
   let userFindByIdUseCase: UserFindByIdUseCase;
 
-  const userRepositoryInterface: UserRepositoryInterface =
-    userRepositoryInterfaceMock;
-  const userMapperInterface: UserMapperInterface = userMapperInterfaceMock;
-  const userInterface: UserInterface = userInterfaceMock;
+  let userRepository: UserRepositoryMock;
+  let userMapper: UserMapperMock;
 
-  beforeEach(() => {
-    userFindByIdUseCase = new UserFindByIdUseCase(
-      userRepositoryInterface,
-      userMapperInterface,
-    );
+  const id: number = 1;
+
+  beforeEach(async () => {
+    userRepository = new UserRepositoryMock();
+    userMapper = new UserMapperMock();
+    userFindByIdUseCase = new UserFindByIdUseCase(userRepository, userMapper);
   });
 
   it('should be defined', () => {
-    expect(userFindByIdUseCase);
+    expect(userFindByIdUseCase).toBeDefined();
   });
 
   describe('execute()', () => {
-    describe('repository.findById()', () => {
-      it('should be return User', async () => {
-        expect(await userRepositoryInterface.findById(1)).toBe(userInterface);
-      });
+    it('should return user when it successfully', async () => {
+      const mockUser = {
+        fullName: 'John Doe',
+        email: 'example01@mail.com',
+        password: 'plainPassword',
+        phone: '0851',
+      };
+
+      userRepository.findById.mockResolvedValue(mockUser);
+      userMapper.asSingle.mockReturnValue(mockUser);
+
+      const result = await userFindByIdUseCase.execute(id);
+
+      expect(result).toBe(mockUser);
+      expect(userRepository.findById).toHaveBeenCalledWith(id);
+      expect(userMapper.asSingle).toHaveBeenCalledWith(mockUser);
     });
 
-    describe('mapper.asSingle()', () => {
-      it('should be return User', async () => {
-        let result = await userRepositoryInterface.findById(1);
-        result = userMapperInterfaceMock.asSingle(result);
-        expect(result).toBe(userInterfaceMock);
-      });
-    });
-  });
-
-  it('should be return User', async () => {
-    let result = await userRepositoryInterface.findById(1);
-    result = userMapperInterfaceMock.asSingle(result);
-    expect(result).toBe(userInterfaceMock);
+    it('should throw error when user not found', async () => {});
   });
 });
