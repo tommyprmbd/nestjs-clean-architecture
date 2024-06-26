@@ -4,6 +4,7 @@ import { User } from './../../domain/models';
 import { UserRepositoryInterface } from './../../domain/repository/user.repository.interface';
 import { UseCaseInterface } from './../../domain/usecase';
 import { EncryptInterface } from './../../domain/encrypt';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 export class UserUpdateUseCase implements UseCaseInterface {
   constructor(
@@ -12,6 +13,11 @@ export class UserUpdateUseCase implements UseCaseInterface {
   ) {}
 
   async execute(updateUserDtoInterface: UpdateUserDtoInterface, id: number) {
+    const findById = await this.repository.findById(id);
+    if (!findById) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
     if (!isEmpty(updateUserDtoInterface.getPassword())) {
       const hashedPassword = await this.encrypt.hashPassword(
         updateUserDtoInterface.getPassword(),

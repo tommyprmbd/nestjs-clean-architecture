@@ -72,5 +72,8 @@ export class User extends ModelAbstract implements UserInterface {
 
   update(updateUserDtoInterface: UpdateUserDtoInterface) {
     this.setFullName(updateUserDtoInterface.getFullName());
+    if (updateUserDtoInterface.getPassword()) {
+      this.setPassword(updateUserDtoInterface.getPassword());
+    }
   }
 }

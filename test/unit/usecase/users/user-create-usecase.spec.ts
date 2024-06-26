@@ -1,32 +1,48 @@
-import {
-  CreateResultDtoInterface,
-  CreateUserDtoInterface,
-} from '../../../../src/domain/dtos';
-import { EncryptInterface } from '../../../../src/domain/encrypt';
-import { UserRepositoryInterface } from '../../../../src/domain/repository/user.repository.interface';
+import { HttpException, HttpStatus } from '@nestjs/common';
+import { User } from '../../../../src/domain/models';
 import { UserCreateUseCase } from '../../../../src/usecase/users';
-import { createUserDtoInterfaceMock } from '../../../mock/domain/dtos/user/create-user-dto-interface.mock';
-import { encryptInterfaceMock } from '../../../mock/domain/encrypt/encrypt-interface.mock';
-import { userRepositoryInterfaceMock } from '../../../mock/domain/repository/user-repository-interface.mock';
-import { createResultDtoInterfaceMock } from './../../../mock/domain/dtos/result/create-result-dto-interface.mock';
+import { CreateUserDtoMock } from '../../../mock/infra/dtos/user/create-user-dto.mock';
+import { EncryptServiceMock } from '../../../mock/infra/encrypt/encrypt-service.mock';
+import { UserRepositoryMock } from '../../../mock/infra/repository/user-repository.mock';
+
+// Mock User class
+jest.mock('../../../../src/domain/models', () => {
+  return {
+    User: jest.fn().mockImplementation(() => {
+      return {
+        fullName: '',
+        email: '',
+        password: '',
+        phone: '',
+        create: jest.fn(function (dto: any) {
+          this.fullName = dto.getFullName();
+          this.email = dto.getEmail();
+          this.password = dto.getPassword();
+          this.phone = dto.getPhone();
+        }), // Mocking the create method directly
+      };
+    }),
+  };
+});
 
 describe('UserCreateUseCase', () => {
   let userCreateUseCase: UserCreateUseCase;
 
-  const userRepositoryInterface: UserRepositoryInterface =
-    userRepositoryInterfaceMock;
-  const encryptInterface: EncryptInterface = encryptInterfaceMock;
-  const createUserDtoInterface: CreateUserDtoInterface =
-    createUserDtoInterfaceMock;
-  const createResultDtoInterface: CreateResultDtoInterface =
-    createResultDtoInterfaceMock;
+  let userRepository: UserRepositoryMock;
+  let encryptService: EncryptServiceMock;
+  let createUserDto: CreateUserDtoMock;
 
-  let hashedPassword: string = null;
+  const plainPassword = 'PlainPassword';
+  const hashedPassword = 'HashedPassword';
+  const fullName = 'John Doe';
+  const email = 'example@mail.com';
+  const phone = '08512341234';
+
   beforeEach(async () => {
-    userCreateUseCase = new UserCreateUseCase(
-      userRepositoryInterface,
-      encryptInterface,
-    );
+    userRepository = new UserRepositoryMock();
+    encryptService = new EncryptServiceMock();
+    createUserDto = new CreateUserDtoMock();
+    userCreateUseCase = new UserCreateUseCase(userRepository, encryptService);
   });
 
   it('should be defined', () => {
@@ -34,29 +50,59 @@ describe('UserCreateUseCase', () => {
   });
 
   describe('execute()', () => {
-    describe('encrypt.hashPassword()', () => {
-      it('should be return string', async () => {
-        expect(
-          await encryptInterface.hashPassword(
-            createUserDtoInterface.getPassword(),
-          ),
-        );
+    it('should create a user successfully', async () => {
+      const user = new User();
+
+      // Mocking the behavior of the DTO and services
+      createUserDto.getFullName.mockReturnValue(fullName);
+      createUserDto.getEmail.mockReturnValue(email);
+      createUserDto.getPassword.mockReturnValue(plainPassword);
+      createUserDto.getPhone.mockReturnValue(phone);
+      encryptService.hashPassword.mockResolvedValue(hashedPassword);
+      userRepository.create.mockResolvedValue(user);
+      userRepository.findByEmail.mockResolvedValue(null);
+
+      // Mock setPassword to update the password inside the DTO
+      createUserDto.setPassword.mockImplementation((newPassword) => {
+        createUserDto.getPassword.mockReturnValue(newPassword);
       });
 
-      it('should be hashed string', async () => {
-        const plainPassword = createUserDtoInterface.getPassword();
-        hashedPassword = await encryptInterface.hashPassword(plainPassword);
+      // Mock User instance creation
+      const result = await userCreateUseCase.execute(createUserDto);
 
-        expect(plainPassword).not.toBe(hashedPassword);
-      });
+      // Assertions
+      expect(encryptService.hashPassword).toHaveBeenCalledWith(plainPassword);
+      expect(createUserDto.setPassword).toHaveBeenCalledWith(hashedPassword);
+
+      expect(userRepository.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          fullName,
+          email,
+          password: hashedPassword,
+          phone,
+        }),
+      );
+
+      expect(result).toBe(user);
     });
 
-    describe('userRepository.create()', () => {
-      it('should be return CreateResultDtoInterface', async () => {
-        expect(userRepositoryInterface.create(createUserDtoInterface)).toBe(
-          createResultDtoInterface,
-        );
-      });
+    it('should throw an error if email already in use', async () => {
+      createUserDto.getEmail.mockReturnValue(email);
+      userRepository.findByEmail.mockResolvedValue(new User());
+
+      // Use try-catch to assert on the HttpException properties
+      try {
+        await userCreateUseCase.execute(createUserDto);
+      } catch (error) {
+        expect(error).toBeInstanceOf(HttpException);
+        expect(error.getStatus()).toBe(HttpStatus.FORBIDDEN);
+        expect(error.message).toBe('Email already in use');
+      }
+
+      expect(userRepository.findByEmail).toHaveBeenCalledWith(email);
+      expect(encryptService.hashPassword).not.toHaveBeenCalled();
+      expect(createUserDto.setPassword).not.toHaveBeenCalled();
+      expect(userRepository.create).not.toHaveBeenCalled();
     });
   });
 });

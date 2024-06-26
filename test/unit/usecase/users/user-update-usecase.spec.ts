@@ -1,29 +1,29 @@
-import {
-  UpdateResultDtoInterface,
-  UpdateUserDtoInterface,
-} from './../../../../src/domain/dtos';
-import { User } from './../../../../src/domain/models';
-import { updateUserDtoInterfaceMock } from './../../../mock/domain/dtos/user/update-user-dto-interface.mock';
-import { UserRepositoryInterface } from './../../../../src/domain/repository/user.repository.interface';
-import { userRepositoryInterfaceMock } from './../../../mock/domain/repository/user-repository-interface.mock';
-import { updateResultDtoInterfaceMock } from './../../../mock/domain/dtos/result/update-result-dto-interface.mock';
-import { UserUpdateUseCase } from './../../../../src/usecase/users';
-import { EncryptInterface } from './../../../../src/domain/encrypt';
-import { encryptInterfaceMock } from './../../../mock/domain/encrypt/encrypt-interface.mock';
+import { UpdateUserDtoMock } from '../../../mock/infra/dtos/user/update-user-dto.mock';
+import { UserUpdateUseCase } from '../../../../src/usecase/users';
+import { EncryptServiceMock } from '../../../mock/infra/encrypt/encrypt-service.mock';
+import { UserRepositoryMock } from '../../../mock/infra/repository/user-repository.mock';
+import { User } from '../../../../src/domain/models';
+import { isEmpty } from '../../../../src/lib/utils/helper';
+import { HttpException, HttpStatus } from '@nestjs/common';
 
 describe('UserUpdateUseCase', () => {
-  const updateUserDtoInterface: UpdateUserDtoInterface =
-    updateUserDtoInterfaceMock;
-  const updateResultDtoInterface: UpdateResultDtoInterface =
-    updateResultDtoInterfaceMock;
-  const userRepository: UserRepositoryInterface = userRepositoryInterfaceMock;
-  const encryptInterface: EncryptInterface = encryptInterfaceMock;
-
   let userUpdateUseCase: UserUpdateUseCase;
-  const user: User = new User();
+
+  let userRepository: UserRepositoryMock;
+  let encryptService: EncryptServiceMock;
+  let updateUserDto: UpdateUserDtoMock;
+
+  const plainPassword: string = 'PlainPassword';
+  const hashedPassword: string = 'HashedPassword';
+  const fullName: string = 'John Doe';
+  const updatedFullName: string = 'Harry';
   const id: number = 1;
+
   beforeEach(async () => {
-    userUpdateUseCase = new UserUpdateUseCase(userRepository, encryptInterface);
+    userRepository = new UserRepositoryMock();
+    encryptService = new EncryptServiceMock();
+    updateUserDto = new UpdateUserDtoMock();
+    userUpdateUseCase = new UserUpdateUseCase(userRepository, encryptService);
   });
 
   it('should be defined', () => {
@@ -31,22 +31,78 @@ describe('UserUpdateUseCase', () => {
   });
 
   describe('execute()', () => {
-    describe('user.setFullName()', () => {
-      it('should be user.getFullName() == userDto.getFullName()', () => {
-        user.setFullName(updateUserDtoInterface.getFullName());
-        expect(user.getFullName()).toBe(updateUserDtoInterface.getFullName());
-      });
+    it('should update user successfully even password not provided', async () => {
+      const user = new User();
+      user.fullName = fullName; // initial fullName
 
-      it('should be return string', () => {
-        user.setFullName(updateUserDtoInterface.getFullName());
-        expect(typeof user.getFullName());
-      });
+      updateUserDto.getFullName.mockReturnValue(updatedFullName);
+      updateUserDto.getPassword.mockReturnValue(null);
+
+      userRepository.findById.mockResolvedValue(user);
+      userRepository.update.mockResolvedValue(user);
+
+      const result = await userUpdateUseCase.execute(updateUserDto, id);
+
+      expect(result).toBe(user);
+      expect(userRepository.findById).toHaveBeenLastCalledWith(id);
+      expect(updateUserDto.setPassword).not.toHaveBeenCalled();
+      expect(encryptService.hashPassword).not.toHaveBeenCalled();
+      expect(userRepository.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          fullName: updatedFullName,
+        }),
+        id,
+      );
+      // Directly check if the fullName property on the user object is updated
+      // expect(user.fullName).toBe(updatedFullName);
     });
 
-    describe('repository.update()', () => {
-      it('should be return UpdateResultDtoInterface', async () => {
-        expect(userRepository.update(user, id)).toBe(updateResultDtoInterface);
+    it('should update password when its provided', async () => {
+      const user = new User();
+      user.fullName = fullName;
+
+      updateUserDto.getFullName.mockReturnValue(updatedFullName);
+      updateUserDto.getPassword.mockReturnValue(plainPassword);
+
+      userRepository.findById.mockResolvedValue(user);
+      encryptService.hashPassword.mockResolvedValue(hashedPassword);
+      userRepository.update.mockResolvedValue(user);
+
+      updateUserDto.setPassword.mockImplementation((newPassword) => {
+        updateUserDto.getPassword.mockReturnValue(newPassword);
       });
+
+      const result = await userUpdateUseCase.execute(updateUserDto, id);
+
+      expect(userRepository.findById).toHaveBeenCalledWith(id);
+      expect(isEmpty(updateUserDto.getPassword)).toBeFalsy();
+      expect(encryptService.hashPassword).toHaveBeenCalledWith(plainPassword);
+      expect(updateUserDto.setPassword).toHaveBeenCalledWith(hashedPassword);
+      expect(userRepository.update).toHaveBeenCalledWith(
+        expect.objectContaining({
+          fullName: updatedFullName,
+          password: hashedPassword,
+        }),
+        id,
+      );
+      expect(result).toBe(user);
+    });
+
+    it('should throw an error when id is not exist', async () => {
+      userRepository.findById.mockResolvedValue(null);
+
+      try {
+        await userUpdateUseCase.execute(updateUserDto, id);
+      } catch (error) {
+        expect(error).toBeInstanceOf(HttpException);
+        expect(error.getStatus()).toBe(HttpStatus.NOT_FOUND);
+        expect(error.message).toBe('User not found');
+      }
+
+      expect(userRepository.findById).toHaveBeenCalledWith(id);
+      expect(userRepository.update).not.toHaveBeenCalled();
+      expect(encryptService.hashPassword).not.toHaveBeenCalled();
+      expect(updateUserDto.setPassword).not.toHaveBeenCalled();
     });
   });
 });
