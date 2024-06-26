@@ -1,47 +1,38 @@
-import { userInterfaceMock } from './../../../mock/domain/model/user-interface.mock';
-import { UserRepositoryInterface } from './../../../../src/domain/repository/user.repository.interface';
-import { UserDeleteUseCase } from './../../../../src/usecase/users';
-import { userRepositoryInterfaceMock } from './../../../mock/domain/repository/user-repository-interface.mock';
-import { DeleteResultDtoInterface } from './../../../../src/domain/dtos';
-import { deleteResultDtoInterfaceMock } from './../../../mock/domain/dtos/result/delete-result-dto-interface.mock';
+import { TypeORMError } from 'typeorm';
+import { UserDeleteUseCase } from '../../../../src/usecase/users';
+import { UserRepositoryMock } from '../../../mock/infra/repository/user-repository.mock';
 
 describe('UserDeleteUseCase', () => {
   let userDeleteUseCase: UserDeleteUseCase;
 
-  const userRepositoryInterface: UserRepositoryInterface =
-    userRepositoryInterfaceMock;
-  const deleteResultDtoInterface: DeleteResultDtoInterface =
-    deleteResultDtoInterfaceMock;
+  let userRepository: UserRepositoryMock;
 
-  beforeEach(() => {
-    userDeleteUseCase = new UserDeleteUseCase(userRepositoryInterface);
+  const id: number = 1;
+
+  beforeEach(async () => {
+    userRepository = new UserRepositoryMock();
+    userDeleteUseCase = new UserDeleteUseCase(userRepository);
   });
 
   it('should be defined', () => {
-    expect(userDeleteUseCase);
+    expect(userDeleteUseCase).toBeDefined();
   });
 
   describe('execute()', () => {
-    describe('repository.findById()', () => {
-      it('should return User model', async () => {
-        expect(await userRepositoryInterface.findById(1)).toBe(
-          userInterfaceMock,
-        );
-      });
+    it('should delete user', async () => {
+      userRepository.delete.mockResolvedValue(true);
+
+      const result = await userDeleteUseCase.execute(id);
+
+      expect(result).toBeTruthy();
+      expect(userRepository.delete).toHaveBeenCalledWith(id);
     });
 
-    describe('repository.delete()', () => {
-      it('should return DeleteResultDtoInterface', async () => {
-        expect(await userRepositoryInterface.delete(1)).toBe(
-          deleteResultDtoInterface,
-        );
-      });
-    });
-  });
+    it('should throw an error when user not found', async () => {
+      userRepository.delete.mockRejectedValue(new TypeORMError());
 
-  it('should return DeleteResultDtoInterface', async () => {
-    expect(await userRepositoryInterface.delete(1)).toBe(
-      deleteResultDtoInterface,
-    );
+      await expect(userDeleteUseCase.execute(id)).rejects.toThrow();
+      expect(userRepository.delete).toHaveBeenCalledWith(id);
+    });
   });
 });

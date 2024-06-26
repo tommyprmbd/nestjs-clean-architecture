@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { UserFindByIdUseCase } from '../../../../src/usecase/users';
 import { UserMapperMock } from '../../../mock/infra/mapper/user-mapper.mock';
 import { UserRepositoryMock } from '../../../mock/infra/repository/user-repository.mock';
@@ -39,6 +40,19 @@ describe('UserFindByIdUseCase', () => {
       expect(userMapper.asSingle).toHaveBeenCalledWith(mockUser);
     });
 
-    it('should throw error when user not found', async () => {});
+    it('should throw error when user not found', async () => {
+      userRepository.findById.mockResolvedValue(null);
+
+      try {
+        await userFindByIdUseCase.execute(id);
+      } catch (error) {
+        expect(error).toBeInstanceOf(HttpException);
+        expect(error.getStatus()).toBe(HttpStatus.NOT_FOUND);
+        expect(error.message).toBe('User not found');
+      }
+
+      expect(userRepository.findById).toHaveBeenCalledWith(id);
+      expect(userMapper.asSingle).not.toHaveBeenCalled();
+    });
   });
 });
