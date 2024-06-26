@@ -44,6 +44,7 @@ analyze:
     paths:
       - .sonar/cache
   script:
+    - npm i sonarqube-scanner@^3.3.0
     - sonar-scanner
   allow_failure: true
   only:
