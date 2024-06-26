@@ -33,9 +33,7 @@ test:
 
 analyze:
   stage: test
-  image:
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: ['']
+  image: sonarsource/sonar-scanner-cli:latest
   tags:
     - staging-runner
   variables:
