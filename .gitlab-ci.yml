@@ -1,5 +1,3 @@
-image: node:alpine
-
 stages:
   - linter
   - test
@@ -11,6 +9,7 @@ linter:
   stage: linter
   tags:
     - staging-runner
+  image: node:alpine
   script:
     - npm i eslint@^8.42.0 eslint-config-prettier@^9.0.0 eslint-plugin-prettier@^5.0.0
     - npm run lint
@@ -22,6 +21,7 @@ test:
   stage: test
   tags:
     - staging-runner
+  image: node:alpine
   script:
     - npm i jest@^29.5.0 ts-jest@^29.1.0
     - npm run test:cov
