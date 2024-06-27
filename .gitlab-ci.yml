@@ -35,10 +35,9 @@ analyze:
   stage: analyze
   tags:
     - staging-runner
-  image: alpine:latest
   before_script:
-    - apk update
-    - apk add wget
+    - apt-get update
+    - apt-get install wget
     - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.0.0.4432-linux.zip
     - unzip sonar-scanner-cli-6.0.0.4432-linux.zip -d /opt
     - export SONAR_SCANNER_HOME=/opt/sonar-scanner-6.0.0.4432-linux
@@ -57,5 +56,27 @@ analyze:
   needs:
     - test
   allow_failure: true
+  only:
+    - main
+
+build:
+  stage: build
+  tags:
+    - staging-runner
+  script:
+    - docker build -f docker/file/nodejs/prod.Dockerfile . -t $CI_REGISTRY_IMAGE:latest
+  needs:
+    - test
+  only:
+    - main
+
+deploy:
+  stage: deploy
+  tags:
+    - staging-runner
+  script:
+    - docker push $CI_REGISTRY_IMAGE:latest
+  needs:
+    - build
   only:
     - main
