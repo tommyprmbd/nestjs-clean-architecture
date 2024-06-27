@@ -1,3 +1,5 @@
+image: node:alpine
+
 stages:
   - linter
   - test
@@ -7,7 +9,6 @@ stages:
 
 linter:
   stage: linter
-  image: node:alpine
   tags:
     - staging-runner
   script:
@@ -19,7 +20,6 @@ linter:
 
 test:
   stage: test
-  image: node:alpine
   tags:
     - staging-runner
   script:
@@ -33,11 +33,17 @@ test:
 
 analyze:
   stage: analyze
-  image:
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: ['']
   tags:
     - staging-runner
+  before_script:
+    - apk update
+    - apk add wget
+    - wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.0.0.4432-linux.zip
+    - unzip sonar-scanner-cli-6.0.0.4432-linux.zip -d /opt
+    - export SONAR_SCANNER_HOME=/opt/sonar-scanner-6.0.0.4432-linux
+    - export PATH=$PATH:$SONAR_SCANNER_HOME/bin
+    - source ~/.bashrc
+    - sonar-scanner -h
   variables:
     SONAR_USER_HOME: '${CI_PROJECT_DIR}/.sonar' # Defines the location of the analysis task cache
     GIT_DEPTH: '0' # Tells git to fetch all the branches of the project, required by the analysis task

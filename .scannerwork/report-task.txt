@@ -1,6 +1,0 @@
-projectKey=tommyprmbd_nestjs-clean-architecture-starter_AZBUaPbu5Z_q6rkj6uzl
-serverUrl=https://sast.salt.id
-serverVersion=9.9.0.65466
-dashboardUrl=https://sast.salt.id/dashboard?id=tommyprmbd_nestjs-clean-architecture-starter_AZBUaPbu5Z_q6rkj6uzl
-ceTaskId=AZBY7QAl5Z_q6rkj6u1t
-ceTaskUrl=https://sast.salt.id/api/ce/task?id=AZBY7QAl5Z_q6rkj6u1t
