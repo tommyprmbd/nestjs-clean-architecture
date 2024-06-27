@@ -35,6 +35,7 @@ analyze:
   stage: analyze
   tags:
     - staging-runner
+  image: alpine:latest
   before_script:
     - apk update
     - apk add wget
