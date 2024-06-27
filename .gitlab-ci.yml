@@ -24,7 +24,7 @@ test:
     - staging-runner
   script:
     - npm i jest@^29.5.0 ts-jest@^29.1.0
-    - npm run test
+    - npm run test:cov
   needs:
     - linter
   allow_failure: true
@@ -32,8 +32,10 @@ test:
     - main
 
 analyze:
-  stage: test
-  image: sonarsource/sonar-scanner-cli:latest
+  stage: analyze
+  image:
+    name: sonarsource/sonar-scanner-cli:latest
+    entrypoint: ['']
   tags:
     - staging-runner
   variables:
@@ -44,8 +46,9 @@ analyze:
     paths:
       - .sonar/cache
   script:
-    - npm i sonarqube-scanner@^3.3.0
     - sonar-scanner
+  needs:
+    - test
   allow_failure: true
   only:
     - main
