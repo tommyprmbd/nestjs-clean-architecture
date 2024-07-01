@@ -1,73 +1,205 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# <!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+<a id="readme-top"></a>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
-## Description
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+<!-- [![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url] -->
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <h1 align="center">NestJS Clean Architecture Starter</h1>
 
-## Installation
+  <p align="center">
+    An awesome starter repository to start your NestJS project!
+    <br />
+    <a href="https://github.com/tommyprmbd/nestjs-clean-architecture"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+  </p>
+</div>
 
-```bash
-$ npm install
-```
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <!-- <li><a href="#usage">Usage</a></li> -->
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <!-- <li><a href="#acknowledgments">Acknowledgments</a></li> -->
+  </ol>
+</details>
 
-## Running the app
+<!-- ABOUT THE PROJECT -->
 
-```bash
-# development
-$ npm run start
+## About The Project
 
-# watch mode
-$ npm run start:dev
+The "NestJS Clean Architecture Starter" is a boilerplate project designed to help developers quickly set up a robust and maintainable NestJS application. Leveraging the principles of Clean Architecture, this starter project provides a solid foundation for building scalable and testable applications. With its intuitive design and comprehensive features, developers can focus on writing business logic while adhering to best practices.
 
-# production mode
-$ npm run start:prod
-```
+### Features
 
-## Test
+- **Clean Architecture Design Pattern**: Implements Clean Architecture principles to promote separation of concerns, making the application more modular, testable, and maintainable.
 
-```bash
-# unit tests
-$ npm run test
+- **Easy to Use**: Designed with simplicity in mind, this starter project allows developers to quickly set up and start coding without worrying about the initial project configuration.
 
-# e2e tests
-$ npm run test:e2e
+- **Test-Case Examples**: Includes example test cases to demonstrate best practices in writing unit and integration tests, ensuring your application is reliable and bug-free.
 
-# test coverage
-$ npm run test:cov
-```
+- **Docker Support**: Easily run the application in a Docker container, providing a consistent development and deployment environment.
 
-## Support
+- **Pre-Commit Hooks**: Utilizes pre-commit hooks to enforce code quality and consistency before changes are committed, catching issues early in the development process.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+- **SonarQube Configuration**: Comes with a pre-configured SonarQube setup to enable continuous inspection of code quality and security, ensuring adherence to coding standards.
 
-## Stay in touch
+### Benefits
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- **Maintainability**: Clean Architecture promotes a modular codebase, making it easier to manage and extend as your application grows.
+- **Testability**: With built-in test cases and a clear separation of concerns, writing and maintaining tests becomes straightforward and efficient.
+- **Scalability**: The modular design allows you to scale different parts of your application independently, ensuring your system can handle increased load.
+- **Consistency**: Docker support ensures that your application runs consistently across different environments, reducing "it works on my machine" issues.
+- **Code Quality**: Pre-commit hooks and SonarQube integration ensure that your codebase remains clean, consistent, and secure throughout the development lifecycle.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- GETTING STARTED -->
+
+## Getting Started
+
+### Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Git**: A version control system to track changes in your code.
+- **Docker**: A platform to develop, ship, and run applications in containers.
+- **Docker Compose**: A tool for defining and running multi-container Docker applications.
+
+### Installation
+
+1. Clone the Project: Use the following command to clone the repository:
+   ```bash
+   git clone git@scm.salt.id:tommyprmbd/nestjs-clean-architecture-starter.git
+   ```
+2. Copy Environment Files:
+   ```bash
+   cp .env.example .env
+   cp ./environment/.env.example ./environment/.env
+   ```
+3. Run the Application: Use Docker Compose to start the application:
+`bash
+    docker compose --env-file=.env --file=docker/compose/local/docker-compose.yml up -d
+    `
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- ROADMAP -->
+
+## Roadmap
+
+- [x] Setup NestJS Clean Architecture
+- [x] Add example CRUD
+- [x] Add Authentication using JWT
+- [x] Add Test Cases
+- [x] Setup docker
+- [x] Setup pre-commit
+- [ ] Setup sonarqube
+- [ ] Add example usage with example features (additional)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTRIBUTING -->
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LICENSE -->
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+Distributed under the MIT License. See `LICENSE.txt` for more information.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- CONTACT -->
+
+## Contact
+
+Your Name - [@tommyprmbd](https://instagram.com/tommyprmbd) - tommypriambodo@gmail.com
+
+Project Link: [https://scm.salt.id/tommyprmbd/nestjs-clean-architecture-starter](https://scm.salt.id/tommyprmbd/nestjs-clean-architecture-starter)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
+[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
+[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
+[forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
+[stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
+[stars-url]: https://img.shields.io/github/stars/tommyprmbd/nestjs-clean-architecture
+[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=for-the-badge
+[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
+[license-shield]: https://img.shields.io/github/license/othneildrew/Best-README-Template.svg?style=for-the-badge
+[license-url]: https://github.com/othneildrew/Best-README-Template/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/othneildrew
+[product-screenshot]: images/screenshot.png
+[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
+[Next-url]: https://nextjs.org/
+[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
+[React-url]: https://reactjs.org/
+[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
+[Vue-url]: https://vuejs.org/
+[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
+[Angular-url]: https://angular.io/
+[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
+[Svelte-url]: https://svelte.dev/
+[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
+[Laravel-url]: https://laravel.com
+[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
+[Bootstrap-url]: https://getbootstrap.com
+[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
+[JQuery-url]: https://jquery.com
