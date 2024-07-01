@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AppEnvironmentConfigEnum } from 'src/domain/common';
-import { AppConfigInterface } from 'src/domain/config';
+import { AppEnvironmentConfigEnum } from './../../../../src/domain/common';
+import { AppConfigInterface } from './../../../../src/domain/config';
 
 @Injectable()
 export class AppConfigService implements AppConfigInterface {

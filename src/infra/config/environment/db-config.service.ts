@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DbConfigInterface } from 'src/domain/config';
-import { DbConfigEnum } from 'src/infra/common';
+import { DbConfigEnum } from './../../../../src/infra/common';
 
 @Injectable()
 export class DbConfigService implements DbConfigInterface {
