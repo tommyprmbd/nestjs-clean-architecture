@@ -1,6 +1,5 @@
 import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ExtractJwt } from 'passport-jwt';
 import { JwtStrategy } from './../../../../src/infra/auth/jwt.strategy';
 import { JwtConfigService } from './../../../../src/infra/config/environment';
 import { JwtConfigServiceMock } from './../../../mock/infra/config/environment/jwt-config-service.mock';
