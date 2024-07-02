@@ -6,6 +6,7 @@ import { UseCasesProxyModule } from './infra/use-cases-proxy/use-cases-proxy.mod
 import { ControllersModule } from './infra/controllers/controllers.module';
 import { LoggerModule } from './infra/logger/logger.module';
 import { AuthModule } from './infra/auth/auth.module';
+import { CacheModule } from './infra/config/cache/cache.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AuthModule } from './infra/auth/auth.module';
     ControllersModule,
     LoggerModule,
     AuthModule,
+    CacheModule,
   ],
   controllers: [AppController],
   providers: [AppService],

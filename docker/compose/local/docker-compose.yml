@@ -10,7 +10,9 @@ services:
       - ./../../../:/app/
     ports:
       - ${DOCKER_NODE_BIND_PORT}:3000
-    # restart: always
+    depends_on:
+      - db
+      - cache
     networks:
       nestjsca_network:
         ipv4_address: ${DOCKER_NODE_IP_ADDRESS}
@@ -26,10 +28,21 @@ services:
       --bind-address=0.0.0.0
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    # restart: always
     networks:
       nestjsca_network:
         ipv4_address: ${DOCKER_MYSQL_IP_ADDRESS}
+
+  cache:
+    container_name: nestjsca_cache
+    image: redis:alpine
+    ports:
+      - ${DOCKER_REDIS_BIND_PORT}:6379
+    volumes:
+      - ./../../data/cache:/data
+    command: redis-server --save 20 1 --loglevel warning --requirepass P@ssw0rd
+    networks:
+      nestjsca_network:
+        ipv4_address: ${DOCKER_REDIS_IP_ADDRESS}
 
 networks:
   nestjsca_network:

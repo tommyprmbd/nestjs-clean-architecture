@@ -5,6 +5,7 @@ import { EncryptConfigService } from './encrypt-config.service';
 import { AppConfigService } from './app-config.service';
 import { SwaggerConfigService } from './swagger-config.service';
 import { JwtConfigService } from './jwt-config.service';
+import { CacheConfigService } from './cache-config.service';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { JwtConfigService } from './jwt-config.service';
     AppConfigService,
     SwaggerConfigService,
     JwtConfigService,
+    CacheConfigService,
   ],
   exports: [
     DbConfigService,
@@ -27,6 +29,7 @@ import { JwtConfigService } from './jwt-config.service';
     AppConfigService,
     SwaggerConfigService,
     JwtConfigService,
+    CacheConfigService,
   ],
 })
 export class EnvironmentModule {}
