@@ -39,6 +39,7 @@ lerna-debug.log*
 .env
 git.sh
 docker/data/mysql
+docker/data/cache
 
 # Sonarqube
 .scannerwork
