@@ -1,4 +1,4 @@
-import { FindManyOptions, Repository } from 'typeorm';
+import { FindManyOptions, FindOneOptions, Repository } from 'typeorm';
 import { ModelInterface } from '../models/model.interface';
 import { RepositoryInterface } from './repository.interface';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
@@ -30,6 +30,10 @@ export abstract class RepositoryAbstract<T extends HasId>
 
   async findById(id: any): Promise<T> {
     return await this.repository.findOneBy({ id: id });
+  }
+
+  async findByCondition(condition: FindOneOptions<T>): Promise<T> {
+    return await this.repository.findOne(condition);
   }
 
   async create(

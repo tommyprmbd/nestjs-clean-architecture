@@ -3,7 +3,7 @@ import { CreateUserDtoInterface } from './../../domain/dtos';
 import { EncryptInterface } from './../../domain/encrypt';
 import { UserRepositoryInterface } from './../../domain/repository/user.repository.interface';
 import { UseCaseInterface } from './../../domain/usecase';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { ConflictException } from '@nestjs/common';
 
 export class UserCreateUseCase implements UseCaseInterface {
   constructor(
@@ -15,8 +15,19 @@ export class UserCreateUseCase implements UseCaseInterface {
     const findByEmail = await this.repository.findByEmail(
       createUserDtoInterface.getEmail(),
     );
+
     if (findByEmail) {
-      throw new HttpException('Email already in use', HttpStatus.FORBIDDEN);
+      throw new ConflictException('Email already in use');
+    }
+
+    const findByPhone = await this.repository.findByCondition({
+      where: {
+        phone: createUserDtoInterface.getPhone(),
+      },
+    });
+
+    if (findByPhone) {
+      throw new ConflictException('Phone already in use');
     }
 
     const hashedPassword = await this.encrypt.hashPassword(
