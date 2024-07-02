@@ -58,6 +58,10 @@ export class BasePresenter implements PresenterInterface {
       };
     }
 
+    if (data instanceof PaginateResultDto) {
+      data = data.data;
+    }
+
     if (data instanceof Object) {
       return data;
     }

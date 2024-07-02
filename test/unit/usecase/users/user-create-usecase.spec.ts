@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { ConflictException, HttpException, HttpStatus } from '@nestjs/common';
 import { User } from '../../../../src/domain/models';
 import { UserCreateUseCase } from '../../../../src/usecase/users';
 import { CreateUserDtoMock } from '../../../mock/infra/dtos/user/create-user-dto.mock';
@@ -94,12 +94,35 @@ describe('UserCreateUseCase', () => {
       try {
         await userCreateUseCase.execute(createUserDto);
       } catch (error) {
-        expect(error).toBeInstanceOf(HttpException);
-        expect(error.getStatus()).toBe(HttpStatus.FORBIDDEN);
+        expect(error).toBeInstanceOf(ConflictException);
         expect(error.message).toBe('Email already in use');
       }
 
       expect(userRepository.findByEmail).toHaveBeenCalledWith(email);
+      expect(userRepository.findByCondition).not.toHaveBeenCalled();
+      expect(encryptService.hashPassword).not.toHaveBeenCalled();
+      expect(createUserDto.setPassword).not.toHaveBeenCalled();
+      expect(userRepository.create).not.toHaveBeenCalled();
+    });
+
+    it('should throw an erro if phone already in use', async () => {
+      createUserDto.getEmail.mockReturnValue(email);
+      createUserDto.getPhone.mockReturnValue(phone);
+      userRepository.findByCondition.mockResolvedValue(new User());
+
+      try {
+        await userCreateUseCase.execute(createUserDto);
+      } catch (error) {
+        expect(error).toBeInstanceOf(ConflictException);
+        expect(error.message).toBe('Phone already in use');
+      }
+
+      expect(userRepository.findByEmail).toHaveBeenCalledWith(email);
+      expect(userRepository.findByCondition).toHaveBeenCalledWith({
+        where: {
+          phone,
+        },
+      });
       expect(encryptService.hashPassword).not.toHaveBeenCalled();
       expect(createUserDto.setPassword).not.toHaveBeenCalled();
       expect(userRepository.create).not.toHaveBeenCalled();
