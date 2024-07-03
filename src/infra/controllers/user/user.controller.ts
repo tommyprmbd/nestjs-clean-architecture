@@ -1,3 +1,4 @@
+import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
 import {
   Body,
   Controller,
@@ -9,6 +10,7 @@ import {
   Put,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/infra/auth';
@@ -25,6 +27,7 @@ import {
 
 @ApiTags('User')
 @Controller('users')
+@UseInterceptors(CacheInterceptor)
 @UseGuards(JwtAuthGuard)
 export class UserController {
   constructor(
@@ -45,6 +48,7 @@ export class UserController {
   ) {}
 
   @Get()
+  @CacheKey('user-find-all')
   async findAll(@Query() options: PageOptionsDto) {
     return new BasePresenter(
       await this.findAllUseCase.getInstance().execute(options),
