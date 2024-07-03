@@ -18,6 +18,10 @@ export class CacheConfigService implements CacheConfigInterface {
     return this.configService.get<string>('REDIS_PASSWORD');
   }
 
+  getTTL(): number {
+    return this.configService.get<number>('REDIS_TTL');
+  }
+
   isGlobal(): boolean {
     return this.configService.get<boolean>('REDIS_IS_GLOBAL');
   }

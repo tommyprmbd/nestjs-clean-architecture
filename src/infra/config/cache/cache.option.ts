@@ -1,24 +1,22 @@
 import { CacheModuleAsyncOptions } from '@nestjs/cache-manager';
-import { ConfigModule } from '@nestjs/config';
 import { redisStore } from 'cache-manager-redis-store';
-import { CacheConfigInterface } from 'src/domain/config/cache-config.interface';
 import { CacheConfigService } from '../environment';
+import { EnvironmentModule } from '../environment/environment.module';
 
-export const CacheOptions = (
-  cacheConfig: CacheConfigService,
-): CacheModuleAsyncOptions => ({
-  isGlobal: cacheConfig.isGlobal(),
-  useFactory: async () => {
+export const CacheOptions: CacheModuleAsyncOptions = {
+  isGlobal: true,
+  imports: [EnvironmentModule],
+  useFactory: async (cacheConfig: CacheConfigService) => {
     const store = await redisStore({
       socket: {
         host: cacheConfig.getHost(),
         port: cacheConfig.getPort(),
       },
-      ttl: 5, // seconds
+      ttl: cacheConfig.getTTL(), // seconds
     });
     return {
       store: () => store,
     };
   },
   inject: [CacheConfigService],
-});
+};

@@ -5,5 +5,7 @@ export interface CacheConfigInterface {
 
   getPassword(): string;
 
+  getTTL(): number;
+
   isGlobal(): boolean;
 }

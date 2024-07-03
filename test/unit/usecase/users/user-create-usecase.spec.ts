@@ -1,4 +1,4 @@
-import { ConflictException, HttpException, HttpStatus } from '@nestjs/common';
+import { ConflictException } from '@nestjs/common';
 import { User } from '../../../../src/domain/models';
 import { UserCreateUseCase } from '../../../../src/usecase/users';
 import { CreateUserDtoMock } from '../../../mock/infra/dtos/user/create-user-dto.mock';

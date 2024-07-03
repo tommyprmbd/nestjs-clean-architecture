@@ -34,12 +34,12 @@ services:
 
   cache:
     container_name: nestjsca_cache
-    image: redis:alpine
+    image: redis:latest
     ports:
       - ${DOCKER_REDIS_BIND_PORT}:6379
     volumes:
       - ./../../data/cache:/data
-    command: redis-server --save 20 1 --loglevel warning --requirepass P@ssw0rd
+    command: ["redis-server"]
     networks:
       nestjsca_network:
         ipv4_address: ${DOCKER_REDIS_IP_ADDRESS}

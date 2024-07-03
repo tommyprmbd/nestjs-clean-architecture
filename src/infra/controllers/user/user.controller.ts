@@ -1,4 +1,4 @@
-import { CacheInterceptor } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheKey } from '@nestjs/cache-manager';
 import {
   Body,
   Controller,
@@ -48,6 +48,7 @@ export class UserController {
   ) {}
 
   @Get()
+  @CacheKey('user-find-all')
   async findAll(@Query() options: PageOptionsDto) {
     return new BasePresenter(
       await this.findAllUseCase.getInstance().execute(options),
